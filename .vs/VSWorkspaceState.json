@@ -1,0 +1,15 @@
+{
+  "ExpandedNodes": [
+    "",
+    "\\assets",
+    "\\components",
+    "\\navigation",
+    "\\Screens",
+    "\\store",
+    "\\store\\actions",
+    "\\store\\reducers",
+    "\\utils"
+  ],
+  "SelectedNode": "\\Screens\\SettingScreen.js",
+  "PreviewInSolutionExplorer": false
+}
