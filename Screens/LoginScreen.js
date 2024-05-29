@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, Button, StyleSheet } from 'react-native';
-import axios from 'axios';
+import { View, Text, TextInput, Button, StyleSheet, Alert } from 'react-native';
+import api from '../utils/api';
 
 const LoginScreen = ({ navigation }) => {
     const [username, setUsername] = useState('');
@@ -8,10 +8,17 @@ const LoginScreen = ({ navigation }) => {
 
     const handleLogin = async () => {
         try {
-            const response = await axios.post('http://localhost:3000/login', { username, password });
-            // Store token and navigate to main app
+            const response = await api.post('/api/auth/login', { username, password });
+            // Assuming the response contains a token
+            const { token } = response.data;
+            // Save the token (you might use AsyncStorage or Context API)
+            console.log('Login successful, token:', token);
+            Alert.alert('Login successful!');
+            // Navigate to the main screen or wherever appropriate
+            navigation.navigate('Main');
         } catch (error) {
-            console.error(error);
+            console.error('Error logging in:', error);
+            Alert.alert('Login failed', 'Invalid username or password');
         }
     };
 
@@ -32,6 +39,10 @@ const LoginScreen = ({ navigation }) => {
                 secureTextEntry
             />
             <Button title="Login" onPress={handleLogin} />
+            <Button
+                title="Go to Sign Up"
+                onPress={() => navigation.navigate('SignUp')}
+            />
         </View>
     );
 };
@@ -40,20 +51,19 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         justifyContent: 'center',
-        alignItems: 'center',
         padding: 16,
     },
     title: {
         fontSize: 24,
         marginBottom: 16,
+        textAlign: 'center',
     },
     input: {
-        width: '100%',
-        padding: 8,
-        marginVertical: 8,
+        height: 40,
+        borderColor: 'gray',
         borderWidth: 1,
-        borderColor: '#ccc',
-        borderRadius: 4,
+        marginBottom: 12,
+        paddingHorizontal: 8,
     },
 });
 
