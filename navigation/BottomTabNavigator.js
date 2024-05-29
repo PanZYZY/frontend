@@ -13,7 +13,7 @@ const Stack = createStackNavigator();
 function TasksStack() {
     return (
         <Stack.Navigator>
-            <Stack.Screen name="TasksMain" component={TasksScreen} />
+            <Stack.Screen name="Tasks" component={TasksScreen} options={{ headerShown: false }} />
             <Stack.Screen name="AddTask" component={AddTaskScreen} />
         </Stack.Navigator>
     );

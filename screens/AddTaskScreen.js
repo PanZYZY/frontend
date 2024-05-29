@@ -5,10 +5,12 @@ import api from '../utils/api';
 const AddTaskScreen = ({ navigation }) => {
 	const [title, setTitle] = useState('');
 	const [description, setDescription] = useState('');
+	const [dueDate, setDueDate] = useState('');
+	const [status, setStatus] = useState('');
 
 	const handleAddTask = async () => {
 		try {
-			await api.post('/api/addTask', { title, description });
+			await api.post('/api/tasks', { title, description, dueDate, status });
 			Alert.alert('Task added successfully!');
 			navigation.goBack();
 		} catch (error) {
@@ -30,6 +32,18 @@ const AddTaskScreen = ({ navigation }) => {
 				placeholder="Description"
 				value={description}
 				onChangeText={setDescription}
+			/>
+			<TextInput
+				style={styles.input}
+				placeholder="Due Date (YYYY-MM-DD)"
+				value={dueDate}
+				onChangeText={setDueDate}
+			/>
+			<TextInput
+				style={styles.input}
+				placeholder="Status"
+				value={status}
+				onChangeText={setStatus}
 			/>
 			<Button title="Add Task" onPress={handleAddTask} />
 		</View>

@@ -17,7 +17,8 @@ const TasksScreen = ({ navigation }) => {
 
     const renderTask = ({ item }) => (
         <View style={styles.taskItem}>
-            <Text>{item.title}</Text>
+            <Text>Title: {item.title}</Text>
+            <Text>Description: {item.description}</Text>
         </View>
     );
 

@@ -13,7 +13,7 @@ function RootNavigator() {
             <Stack.Navigator initialRouteName="Login">
                 <Stack.Screen name="Login" component={LoginScreen} />
                 <Stack.Screen name="SignUp" component={SignUpScreen} />
-                <Stack.Screen name="Main" component={BottomTabNavigator} />
+                <Stack.Screen name="Main" component={BottomTabNavigator} options={{ headerShown: false }} />
             </Stack.Navigator>
         </NavigationContainer>
     );
