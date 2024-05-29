@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet, Button, FlatList } from 'react-native';
 import api from '../utils/api';
 
-const TasksScreen = () => {
+const TasksScreen = ({ navigation }) => {
     const [tasks, setTasks] = useState([]);
 
     useEffect(() => {
@@ -15,11 +15,23 @@ const TasksScreen = () => {
             });
     }, []);
 
+    const renderTask = ({ item }) => (
+        <View style={styles.taskItem}>
+            <Text>{item.title}</Text>
+        </View>
+    );
+
     return (
         <View style={styles.container}>
-            {tasks.map(task => (
-                <Text key={task.id}>{task.title}</Text>
-            ))}
+            <FlatList
+                data={tasks}
+                renderItem={renderTask}
+                keyExtractor={(item) => item.id.toString()}
+            />
+            <Button
+                title="Add Task"
+                onPress={() => navigation.navigate('AddTask')}
+            />
         </View>
     );
 };
@@ -30,6 +42,12 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
     },
+    taskItem: {
+        padding: 10,
+        borderBottomWidth: 1,
+        borderBottomColor: '#ccc',
+    },
 });
 
 export default TasksScreen;
+

@@ -14,7 +14,7 @@ const LoginScreen = ({ navigation }) => {
             // Save the token (you might use AsyncStorage or Context API)
             console.log('Login successful, token:', token);
             Alert.alert('Login successful!');
-            // Navigate to the main screen or wherever appropriate
+            // Navigate to task screen
             navigation.navigate('Main');
         } catch (error) {
             console.error('Error logging in:', error);
