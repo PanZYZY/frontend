@@ -2,10 +2,11 @@ import React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createStackNavigator } from '@react-navigation/stack';
 import TasksScreen from '../screens/TasksScreen';
+import AddTaskScreen from '../screens/AddTaskScreen';
 import CalendarScreen from '../screens/CalendarScreen';
 import AboutScreen from '../screens/AboutScreen';
 import SettingsScreen from '../screens/SettingsScreen';
-import AddTaskScreen from '../screens/AddTaskScreen';
+import TaskDetailScreen from '../screens/TaskDetailScreen';
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
@@ -13,8 +14,9 @@ const Stack = createStackNavigator();
 function TasksStack() {
     return (
         <Stack.Navigator>
-            <Stack.Screen name="Tasks" component={TasksScreen} options={{ headerShown: false }} />
+            <Stack.Screen name="TasksHome" component={TasksScreen} options={{ headerShown: false }} />
             <Stack.Screen name="AddTask" component={AddTaskScreen} />
+            <Stack.Screen name="TaskDetail" component={TaskDetailScreen} />
         </Stack.Navigator>
     );
 }

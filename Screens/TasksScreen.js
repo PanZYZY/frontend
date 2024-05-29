@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, StyleSheet, Button, FlatList } from 'react-native';
+import { View, Text, StyleSheet, Button, FlatList, TouchableOpacity } from 'react-native';
 import api from '../utils/api';
 
 const TasksScreen = ({ navigation }) => {
@@ -16,10 +16,12 @@ const TasksScreen = ({ navigation }) => {
     }, []);
 
     const renderTask = ({ item }) => (
-        <View style={styles.taskItem}>
-            <Text>Title: {item.title}</Text>
-            <Text>Description: {item.description}</Text>
-        </View>
+        <TouchableOpacity onPress={() => navigation.navigate('TaskDetail', { taskId: item.id })}>
+            <View style={styles.taskItem}>
+                <Text>Title: {item.title}</Text>
+                <Text>Due Date: {item.dueDate}</Text>
+            </View>
+        </TouchableOpacity>
     );
 
     return (
