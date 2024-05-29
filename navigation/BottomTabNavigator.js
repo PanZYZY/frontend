@@ -13,7 +13,7 @@ const Stack = createStackNavigator();
 function TasksStack() {
     return (
         <Stack.Navigator>
-            <Stack.Screen name="Tasks" component={TasksScreen} />
+            <Stack.Screen name="TasksMain" component={TasksScreen} />
             <Stack.Screen name="AddTask" component={AddTaskScreen} />
         </Stack.Navigator>
     );
@@ -22,7 +22,7 @@ function TasksStack() {
 function BottomTabNavigator() {
     return (
         <Tab.Navigator>
-            <Tab.Screen name="Main" component={TasksStack} />
+            <Tab.Screen name="Tasks" component={TasksStack} />
             <Tab.Screen name="Calendar" component={CalendarScreen} />
             <Tab.Screen name="About" component={AboutScreen} />
             <Tab.Screen name="Settings" component={SettingsScreen} />
@@ -31,3 +31,4 @@ function BottomTabNavigator() {
 }
 
 export default BottomTabNavigator;
+

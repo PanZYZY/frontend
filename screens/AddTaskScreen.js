@@ -8,7 +8,7 @@ const AddTaskScreen = ({ navigation }) => {
 
 	const handleAddTask = async () => {
 		try {
-			await api.post('/api/tasks', { title, description });
+			await api.post('/api/addTask', { title, description });
 			Alert.alert('Task added successfully!');
 			navigation.goBack();
 		} catch (error) {
