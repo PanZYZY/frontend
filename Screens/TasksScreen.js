@@ -1,28 +1,39 @@
-import React, { useEffect, useState } from 'react';
-import { View, Text, StyleSheet, Button, FlatList, TouchableOpacity } from 'react-native';
+import React, { useEffect, useState, useCallback } from 'react';
+import { View, StyleSheet, Button, FlatList, Alert } from 'react-native';
 import api from '../utils/api';
+import TaskItem from '../components/TaskItem';
 
-const TasksScreen = ({ navigation }) => {
+const TasksScreen = ({ navigation, route }) => {
     const [tasks, setTasks] = useState([]);
 
     useEffect(() => {
-        api.get('/api/tasks')
-            .then(response => {
-                setTasks(response.data);
-            })
-            .catch(error => {
-                console.error('Error fetching tasks:', error);
-            });
+        fetchTasks();
     }, []);
 
-    const renderTask = ({ item }) => (
-        <TouchableOpacity onPress={() => navigation.navigate('TaskDetail', { taskId: item.id })}>
-            <View style={styles.taskItem}>
-                <Text>Title: {item.title}</Text>
-                <Text>Due Date: {item.dueDate}</Text>
-            </View>
-        </TouchableOpacity>
-    );
+    useEffect(() => {
+        if (route.params?.newTask) {
+            const newTask = route.params.newTask;
+            setTasks((prevTasks) => [...prevTasks, newTask]);
+        }
+    }, [route.params?.newTask]);
+
+    const fetchTasks = async () => {
+        try {
+            const response = await api.get('/api/tasks');
+            setTasks(response.data);
+        } catch (error) {
+            console.error('Error fetching tasks:', error);
+            Alert.alert('Error', 'Could not fetch tasks');
+        }
+    };
+
+    const handlePressTask = useCallback((taskId) => {
+        navigation.navigate('TaskDetail', { taskId });
+    }, [navigation]);
+
+    const renderTask = useCallback(({ item }) => (
+        <TaskItem task={item} onPress={handlePressTask} />
+    ), [handlePressTask]);
 
     return (
         <View style={styles.container}>
@@ -30,6 +41,10 @@ const TasksScreen = ({ navigation }) => {
                 data={tasks}
                 renderItem={renderTask}
                 keyExtractor={(item) => item.id.toString()}
+                removeClippedSubviews={true} // This will help improve performance
+                initialNumToRender={10} // Reduce initial render amount
+                maxToRenderPerBatch={10} // Increase the amount of render per batch
+                windowSize={21} // Increase the window size
             />
             <Button
                 title="Add Task"
@@ -45,12 +60,8 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
     },
-    taskItem: {
-        padding: 10,
-        borderBottomWidth: 1,
-        borderBottomColor: '#ccc',
-    },
 });
 
 export default TasksScreen;
+
 

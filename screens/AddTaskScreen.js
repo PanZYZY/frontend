@@ -10,9 +10,9 @@ const AddTaskScreen = ({ navigation }) => {
 
 	const handleAddTask = async () => {
 		try {
-			await api.post('/api/tasks', { title, description, dueDate, status });
+			const response = await api.post('/api/tasks', { title, description, dueDate, status });
 			Alert.alert('Task added successfully!');
-			navigation.goBack();
+			navigation.navigate('TasksHome', { newTask: response.data });
 		} catch (error) {
 			console.error('Error adding task:', error);
 			Alert.alert('Error adding task', 'An error occurred');
