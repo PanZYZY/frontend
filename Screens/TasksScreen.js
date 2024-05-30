@@ -6,6 +6,7 @@ import TaskItem from '../components/TaskItem';
 const TasksScreen = ({ navigation, route }) => {
     const [tasks, setTasks] = useState([]);
 
+    //sync when new task is added
     useEffect(() => {
         fetchTasks();
     }, []);
@@ -17,6 +18,22 @@ const TasksScreen = ({ navigation, route }) => {
         }
     }, [route.params?.newTask]);
 
+    //sync when task is updated
+    useEffect(() => {
+        if (route.params?.updatedTask) {
+            const updatedTask = route.params.updatedTask;
+            setTasks((prevTasks) => prevTasks.map(task => task.id === updatedTask.id ? updatedTask : task));
+        }
+    }, [route.params?.updatedTask]);
+
+    //sync when task is deleted
+    useEffect(() => {
+        if (route.params?.deletedTaskId) {
+            const deletedTaskId = route.params.deletedTaskId;
+            setTasks((prevTasks) => prevTasks.filter(task => task.id !== deletedTaskId));
+        }
+    }, [route.params?.deletedTaskId]);
+
     const fetchTasks = async () => {
         try {
             const response = await api.get('/api/tasks');
@@ -27,6 +44,7 @@ const TasksScreen = ({ navigation, route }) => {
         }
     };
 
+    //When press on a task, direct to detail page
     const handlePressTask = useCallback((taskId) => {
         navigation.navigate('TaskDetail', { taskId });
     }, [navigation]);

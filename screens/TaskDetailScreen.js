@@ -11,25 +11,29 @@ const TaskDetailScreen = ({ route, navigation }) => {
     const [status, setStatus] = useState('');
 
     useEffect(() => {
-        api.get(`/api/tasks/${taskId}`)
-            .then(response => {
-                const task = response.data;
-                setTask(task);
-                setTitle(task.title);
-                setDescription(task.description);
-                setDueDate(task.dueDate);
-                setStatus(task.status);
-            })
-            .catch(error => {
-                console.error('Error fetching task:', error);
-                Alert.alert('Error', 'Could not fetch task details');
-            });
+        fetchTaskDetails();
     }, [taskId]);
+
+    const fetchTaskDetails = async () => {
+        try {
+            const response = await api.get(`/api/tasks/${taskId}`);
+            const task = response.data;
+            setTask(task);
+            setTitle(task.title);
+            setDescription(task.description);
+            setDueDate(task.dueDate);
+            setStatus(task.status);
+        } catch (error) {
+            console.error('Error fetching task:', error);
+            Alert.alert('Error', 'Could not fetch task details');
+        }
+    };
 
     const handleUpdateTask = async () => {
         try {
             await api.put(`/api/tasks/${taskId}`, { title, description, dueDate, status });
             Alert.alert('Success', 'Task updated successfully');
+            navigation.navigate('TasksHome', { updatedTask: { id: taskId, title, description, dueDate, status } });
         } catch (error) {
             console.error('Error updating task:', error);
             Alert.alert('Error', 'Could not update task');
@@ -40,7 +44,7 @@ const TaskDetailScreen = ({ route, navigation }) => {
         try {
             await api.delete(`/api/tasks/${taskId}`);
             Alert.alert('Success', 'Task deleted successfully');
-            navigation.navigate('Tasks');
+            navigation.navigate('TasksHome', { deletedTaskId: taskId });
         } catch (error) {
             console.error('Error deleting task:', error);
             Alert.alert('Error', 'Could not delete task');
@@ -82,7 +86,7 @@ const TaskDetailScreen = ({ route, navigation }) => {
                 onChangeText={setStatus}
             />
             <Button title="Update Task" onPress={handleUpdateTask} />
-            <Button title="Delete Task" onPress={handleDeleteTask} />
+            <Button title="Delete Task" onPress={handleDeleteTask} color="red" />
         </View>
     );
 };

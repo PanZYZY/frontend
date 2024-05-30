@@ -9,13 +9,25 @@ const CalendarScreen = ({ navigation, route }) => {
     useEffect(() => {
         fetchTasks();
     }, []);
-
+    //Sync whe a task is added/updated/deleted
     useEffect(() => {
         if (route.params?.newTask) {
             const newTask = route.params.newTask;
             updateMarkedDates(newTask.dueDate);
         }
     }, [route.params?.newTask]);
+    useEffect(() => {
+        if (route.params?.updatedTask) {
+            const updatedTask = route.params.updatedTask;
+            updateMarkedDates(updatedTask.dueDate);
+        }
+    }, [route.params?.updatedTask]);
+
+    useEffect(() => {
+        if (route.params?.deletedTaskId) {
+            fetchTasks();
+        }
+    }, [route.params?.deletedTaskId]);
 
     const fetchTasks = async () => {
         try {
@@ -41,6 +53,7 @@ const CalendarScreen = ({ navigation, route }) => {
         }));
     };
 
+    //Go to task list for the date pressed
     const handleDayPress = (day) => {
         navigation.navigate('TaskList', { selectedDate: day.dateString });
     };

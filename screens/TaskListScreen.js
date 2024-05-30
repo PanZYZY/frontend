@@ -6,9 +6,24 @@ const TaskListScreen = ({ route }) => {
     const { selectedDate } = route.params;
     const [tasks, setTasks] = useState([]);
 
+    //Fetch tasks from selected date
     useEffect(() => {
         fetchTasksForDate(selectedDate);
     }, [selectedDate]);
+    //Sync when a task is updated
+    useEffect(() => {
+        if (route.params?.updatedTask) {
+            const updatedTask = route.params.updatedTask;
+            setTasks((prevTasks) => prevTasks.map(task => task.id === updatedTask.id ? updatedTask : task));
+        }
+    }, [route.params?.updatedTask]);
+    //Sync when a task is deleted
+    useEffect(() => {
+        if (route.params?.deletedTaskId) {
+            const deletedTaskId = route.params.deletedTaskId;
+            setTasks((prevTasks) => prevTasks.filter(task => task.id !== deletedTaskId));
+        }
+    }, [route.params?.deletedTaskId]);
 
     const fetchTasksForDate = async (date) => {
         try {
@@ -21,7 +36,7 @@ const TaskListScreen = ({ route }) => {
             Alert.alert('Error', 'Could not fetch tasks');
         }
     };
-
+    //Render task details
     const renderTask = ({ item }) => (
         <View style={styles.taskItem}>
             <Text style={styles.taskTitle}>{item.title}</Text>
