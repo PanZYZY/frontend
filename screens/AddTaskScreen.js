@@ -1,22 +1,39 @@
 import React, { useState } from 'react';
-import { View, TextInput, Button, StyleSheet, Alert } from 'react-native';
+import { View, TextInput, Button, StyleSheet, Alert, Platform } from 'react-native';
+import DateTimePicker from '@react-native-community/datetimepicker';
 import api from '../utils/api';
 
 const AddTaskScreen = ({ navigation }) => {
 	const [title, setTitle] = useState('');
 	const [description, setDescription] = useState('');
-	const [dueDate, setDueDate] = useState('');
+	const [dueDate, setDueDate] = useState(new Date());
+	const [showDatePicker, setShowDatePicker] = useState(false);
 	const [status, setStatus] = useState('');
+
+	const formatDate = (date) => {
+		const d = new Date(date);
+		const month = ('0' + (d.getMonth() + 1)).slice(-2);
+		const day = ('0' + d.getDate()).slice(-2);
+		const year = d.getFullYear();
+		return `${year}-${month}-${day}`;
+	};
 
 	const handleAddTask = async () => {
 		try {
-			const response = await api.post('/api/tasks', { title, description, dueDate, status });
+			const formattedDueDate = formatDate(dueDate);
+			const response = await api.post('/api/tasks', { title, description, dueDate: formattedDueDate, status });
 			Alert.alert('Task added successfully!');
 			navigation.navigate('TasksHome', { newTask: response.data });
 		} catch (error) {
 			console.error('Error adding task:', error);
 			Alert.alert('Error adding task', 'An error occurred');
 		}
+	};
+
+	const handleDateChange = (event, selectedDate) => {
+		const currentDate = selectedDate || dueDate;
+		setShowDatePicker(Platform.OS === 'ios');
+		setDueDate(currentDate);
 	};
 
 	return (
@@ -36,9 +53,18 @@ const AddTaskScreen = ({ navigation }) => {
 			<TextInput
 				style={styles.input}
 				placeholder="Due Date (YYYY-MM-DD)"
-				value={dueDate}
-				onChangeText={setDueDate}
+				value={formatDate(dueDate)}
+				onFocus={() => setShowDatePicker(true)}
+				showSoftInputOnFocus={false}
 			/>
+			{showDatePicker && (
+				<DateTimePicker
+					value={dueDate}
+					mode="date"
+					display="default"
+					onChange={handleDateChange}
+				/>
+			)}
 			<TextInput
 				style={styles.input}
 				placeholder="Status"
@@ -66,3 +92,4 @@ const styles = StyleSheet.create({
 });
 
 export default AddTaskScreen;
+

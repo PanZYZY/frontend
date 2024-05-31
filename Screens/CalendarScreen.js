@@ -5,24 +5,22 @@ import api from '../utils/api';
 
 const CalendarScreen = ({ navigation, route }) => {
     const [markedDates, setMarkedDates] = useState({});
+    const [tasks, setTasks] = useState([]);
 
     useEffect(() => {
         fetchTasks();
     }, []);
-    //Sync whe a task is added/updated/deleted
+
+    // Sync when a task is added/updated
     useEffect(() => {
         if (route.params?.newTask) {
             const newTask = route.params.newTask;
-            updateMarkedDates(newTask.dueDate);
+            updateMarkedDates(newTask.dueDate, true);
+            fetchTasks();
         }
     }, [route.params?.newTask]);
-    useEffect(() => {
-        if (route.params?.updatedTask) {
-            const updatedTask = route.params.updatedTask;
-            updateMarkedDates(updatedTask.dueDate);
-        }
-    }, [route.params?.updatedTask]);
 
+    // Sync when a task is deleted
     useEffect(() => {
         if (route.params?.deletedTaskId) {
             fetchTasks();
@@ -33,6 +31,8 @@ const CalendarScreen = ({ navigation, route }) => {
         try {
             const response = await api.get('/api/tasks');
             const tasks = response.data;
+            setTasks(tasks);
+
             const dates = {};
             tasks.forEach(task => {
                 const date = task.dueDate;
@@ -40,20 +40,41 @@ const CalendarScreen = ({ navigation, route }) => {
                     dates[date] = { marked: true };
                 }
             });
-            setMarkedDates(dates);
+            const updatedMarkedDates = { ...markedDates };
+
+            // Remove marks for dates that no longer have tasks
+            Object.keys(updatedMarkedDates).forEach(date => {
+                if (!dates[date]) {
+                    delete updatedMarkedDates[date];
+                }
+            });
+
+            // Add marks for new task dates
+            Object.keys(dates).forEach(date => {
+                if (!updatedMarkedDates[date]) {
+                    updatedMarkedDates[date] = { marked: true };
+                }
+            });
+
+            setMarkedDates(updatedMarkedDates);
         } catch (error) {
             console.error('Error fetching tasks:', error);
         }
     };
 
-    const updateMarkedDates = (date) => {
-        setMarkedDates(prevDates => ({
-            ...prevDates,
-            [date]: { marked: true },
-        }));
+    const updateMarkedDates = (date, marked) => {
+        setMarkedDates(prevDates => {
+            const updatedDates = { ...prevDates };
+            if (marked) {
+                updatedDates[date] = { marked: true };
+            } else {
+                delete updatedDates[date];
+            }
+            return updatedDates;
+        });
     };
 
-    //Go to task list for the date pressed
+    // Go to task list for the date pressed
     const handleDayPress = (day) => {
         navigation.navigate('TaskList', { selectedDate: day.dateString });
     };
@@ -79,4 +100,5 @@ const styles = StyleSheet.create({
 });
 
 export default CalendarScreen;
+
 

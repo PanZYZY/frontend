@@ -6,11 +6,11 @@ import TaskItem from '../components/TaskItem';
 const TasksScreen = ({ navigation, route }) => {
     const [tasks, setTasks] = useState([]);
 
-    //sync when new task is added
     useEffect(() => {
         fetchTasks();
     }, []);
 
+    //sync when new task is added
     useEffect(() => {
         if (route.params?.newTask) {
             const newTask = route.params.newTask;

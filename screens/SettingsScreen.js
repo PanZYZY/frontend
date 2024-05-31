@@ -1,23 +1,21 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { View, Text, Button, StyleSheet } from 'react-native';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useFontSize } from '../context/FontSizeContext';
+import { useNavigation } from '@react-navigation/native';
 
 const SettingsScreen = () => {
-    const [fontSize, setFontSize] = useState('medium');
+    const { fontSize, increaseFontSize } = useFontSize();
+    const navigation = useNavigation();
 
-    const saveSettings = async () => {
-        try {
-            await AsyncStorage.setItem('settings', JSON.stringify({ fontSize }));
-        } catch (error) {
-            console.error(error);
-        }
+    const handleLogout = () => {
+        navigation.navigate('Login');
     };
 
     return (
         <View style={styles.container}>
-            <Text style={styles.title}>Settings</Text>
-            <Button title="Increase Font Size" onPress={() => setFontSize('large')} />
-            <Button title="Save Settings" onPress={saveSettings} />
+            <Text style={{ fontSize }}>This is the settings screen</Text>
+            <Button title="Increase Font Size" onPress={increaseFontSize} />
+            <Button title="Logout" onPress={handleLogout} color="red" />
         </View>
     );
 };
@@ -26,10 +24,6 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         padding: 16,
-    },
-    title: {
-        fontSize: 24,
-        marginBottom: 16,
     },
 });
 

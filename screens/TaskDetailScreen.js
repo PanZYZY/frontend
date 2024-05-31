@@ -86,7 +86,7 @@ const TaskDetailScreen = ({ route, navigation }) => {
                 onChangeText={setStatus}
             />
             <Button title="Update Task" onPress={handleUpdateTask} />
-            <Button title="Delete Task" onPress={handleDeleteTask} color="red" />
+            <Button title="Delete Task" onPress={handleDeleteTask} />
         </View>
     );
 };
