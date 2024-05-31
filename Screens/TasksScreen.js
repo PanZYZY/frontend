@@ -3,7 +3,7 @@ import { View, StyleSheet, Button, FlatList, Alert } from 'react-native';
 import api from '../utils/api';
 import TaskItem from '../components/TaskItem';
 import { useAuth } from '../context/AuthContext';
-import CustomButton from '../context/CustomButton';
+import CustomButton from '../components/CustomButton';
 
 const TasksScreen = ({ navigation, route }) => {
     const [tasks, setTasks] = useState([]);
@@ -11,7 +11,7 @@ const TasksScreen = ({ navigation, route }) => {
 
     useEffect(() => {
         fetchTasks();
-    }, []);
+    }, [user]);
 
     useEffect(() => {
         if (route.params?.newTask) {
@@ -36,7 +36,7 @@ const TasksScreen = ({ navigation, route }) => {
 
     const fetchTasks = async () => {
         try {
-            const response = await api.get('/api/tasks', { params: { userId: user.id } });
+            const response = await api.get('/tasks', { params: { userId: user.id } });
             setTasks(response.data);
         } catch (error) {
             console.error('Error fetching tasks:', error);

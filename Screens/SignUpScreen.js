@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, Button, StyleSheet, Alert } from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import api from '../utils/api';
 import { useAuth } from '../context/AuthContext';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const SignUpScreen = ({ navigation }) => {
     const [username, setUsername] = useState('');
@@ -11,10 +11,11 @@ const SignUpScreen = ({ navigation }) => {
 
     const handleSignUp = async () => {
         try {
-            const response = await api.post('/api/auth/register', { username, password });
+            const response = await api.post('/auth/signup', { username, password });
             const { token, user } = response.data;
             //store token
             await AsyncStorage.setItem('token', token);
+            //update context with user data
             login(user);
             Alert.alert('Sign up successful!');
             navigation.navigate('Login');
@@ -24,27 +25,27 @@ const SignUpScreen = ({ navigation }) => {
         }
     };
 
-    return (
-        <View style={styles.container}>
-            <Text style={styles.title}>Sign Up</Text>
-            <TextInput
-                style={styles.input}
-                placeholder="Username"
-                value={username}
-                onChangeText={setUsername}
-            />
-            <TextInput
-                style={styles.input}
-                placeholder="Password"
-                value={password}
-                onChangeText={setPassword}
-                secureTextEntry
-            />
-            <Button title="Sign Up" onPress={handleSignUp} />
-            <Button title="Go to Login" onPress={() => navigation.navigate('Login')} />
-        </View>
-    );
+ return (
+    <View style={styles.container}>
+      <TextInput
+        style={styles.input}
+        placeholder="Username"
+        value={username}
+        onChangeText={setUsername}
+      />
+      <TextInput
+        style={styles.input}
+        placeholder="Password"
+        value={password}
+        onChangeText={setPassword}
+        secureTextEntry
+      />
+      <Button title="Sign Up" onPress={handleSignUp} />
+      <Button title="Back to Login" onPress={() => navigation.navigate('Login')} />
+    </View>
+  );
 };
+
 
 const styles = StyleSheet.create({
     container: {

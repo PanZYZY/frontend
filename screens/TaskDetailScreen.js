@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, TextInput, Button, StyleSheet, Alert } from 'react-native';
 import api from '../utils/api';
+import { useAuth } from '../context/AuthContext';
 
 const TaskDetailScreen = ({ route, navigation }) => {
     const { taskId } = route.params;
@@ -16,7 +17,7 @@ const TaskDetailScreen = ({ route, navigation }) => {
 
     const fetchTaskDetails = async () => {
         try {
-            const response = await api.get(`/api/tasks/${taskId}`);
+            const response = await api.get(`/tasks/${taskId}`, { params: { userId: user.id } });
             const task = response.data;
             setTask(task);
             setTitle(task.title);
@@ -31,7 +32,7 @@ const TaskDetailScreen = ({ route, navigation }) => {
 
     const handleUpdateTask = async () => {
         try {
-            await api.put(`/api/tasks/${taskId}`, { title, description, dueDate, status });
+            await api.put(`/tasks/${taskId}`, { title,userId: user.id, description, dueDate, status });
             Alert.alert('Success', 'Task updated successfully');
             navigation.navigate('TasksHome', { updatedTask: { id: taskId, title, description, dueDate, status } });
         } catch (error) {
@@ -42,7 +43,7 @@ const TaskDetailScreen = ({ route, navigation }) => {
 
     const handleDeleteTask = async () => {
         try {
-            await api.delete(`/api/tasks/${taskId}`);
+            await api.delete(`/tasks/${taskId}`, { params: { userId: user.id } });
             Alert.alert('Success', 'Task deleted successfully');
             navigation.navigate('TasksHome', { deletedTaskId: taskId });
         } catch (error) {
@@ -54,7 +55,7 @@ const TaskDetailScreen = ({ route, navigation }) => {
     if (!task) {
         return (
             <View style={styles.container}>
-                <Text>Loading...</Text>
+                <Text>No task available.</Text>
             </View>
         );
     }

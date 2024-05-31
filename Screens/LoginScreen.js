@@ -11,7 +11,7 @@ const LoginScreen = ({ navigation }) => {
 
     const handleLogin = async () => {
         try {
-            const response = await api.post('/api/auth/login', { username, password });
+            const response = await api.post('/auth/login', { username, password });
             // Assuming the response contains a token
             const { token, user } = response.data;
             //store the token

@@ -4,12 +4,12 @@ import api from '../utils/api';
 import { useAuth } from '../context/AuthContext';
 
 const AddTaskScreen = ({ navigation, route }) => {
-	const { userId } = route.params;
-	const { user } = useAuth();
+
 	const [title, setTitle] = useState('');
 	const [description, setDescription] = useState('');
 	const [dueDate, setDueDate] = useState('');
 	const [status, setStatus] = useState('');
+	const { user } = useAuth();
 
 	const formatDate = (date) => {
 		const d = new Date(date);
@@ -20,16 +20,16 @@ const AddTaskScreen = ({ navigation, route }) => {
 	};
 
 	const handleAddTask = async () => {
-		if (!user || !user.id) {
+		if (!user ) {
 			Alert.alert('Error', 'User not authenticated');
 			return;
 			}
 
 		const formattedDueDate = formatDate(dueDate);
 		try {
-			const response = await api.post('/api/tasks', { title, description, dueDate: formattedDueDate, status, userId: user.id });
+			const response = await api.post('/tasks', { title, description, dueDate: formattedDueDate, status, userId: user.id });
 			Alert.alert('Task added successfully!');
-			navigation.navigate('TasksHome', { newTask: response.data });
+			navigation.navigate('TasksHome', { refresh: true });
 		} catch (error) {
 			console.error('Error adding task:', error);
 			Alert.alert('Error adding task', 'An error occurred');

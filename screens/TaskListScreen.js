@@ -27,7 +27,7 @@ const TaskListScreen = ({ route }) => {
 
     const fetchTasksForDate = async (date) => {
         try {
-            const response = await api.get('/api/tasks');
+            const response = await api.get('/tasks');
             const allTasks = response.data;
             const filteredTasks = allTasks.filter(task => task.dueDate === date);
             setTasks(filteredTasks);
