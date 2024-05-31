@@ -1,14 +1,21 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, Button, StyleSheet, Alert } from 'react-native';
 import api from '../utils/api';
+import { useAuth } from '../context/AuthContext';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const SignUpScreen = ({ navigation }) => {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
+    const { login } = useAuth();
 
     const handleSignUp = async () => {
         try {
-            await api.post('/api/auth/register', { username, password });
+            const response = await api.post('/api/auth/register', { username, password });
+            const { token, user } = response.data;
+            //store token
+            await AsyncStorage.setItem('token', token);
+            login(user);
             Alert.alert('Sign up successful!');
             navigation.navigate('Login');
         } catch (error) {

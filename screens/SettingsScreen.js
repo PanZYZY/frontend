@@ -2,9 +2,10 @@ import React from 'react';
 import { View, Text, Button, StyleSheet } from 'react-native';
 import { useFontSize } from '../context/FontSizeContext';
 import { useNavigation } from '@react-navigation/native';
+import CustomButton from '../context/CustomButton';
 
 const SettingsScreen = () => {
-    const { fontSize, increaseFontSize } = useFontSize();
+    const { fontSize, increaseFontSize, resetFontSize } = useFontSize();
     const navigation = useNavigation();
 
     const handleLogout = () => {
@@ -14,8 +15,9 @@ const SettingsScreen = () => {
     return (
         <View style={styles.container}>
             <Text style={{ fontSize }}>This is the settings screen</Text>
-            <Button title="Increase Font Size" onPress={increaseFontSize} />
-            <Button title="Logout" onPress={handleLogout} color="red" />
+            <CustomButton title="Increase Font Size" onPress={increaseFontSize} />
+            <CustomButton title="Default Font Size" onPress={resetFontSize} />
+            <CustomButton title="Logout" onPress={handleLogout} color="red" />
         </View>
     );
 };
@@ -28,3 +30,4 @@ const styles = StyleSheet.create({
 });
 
 export default SettingsScreen;
+

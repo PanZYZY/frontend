@@ -2,15 +2,17 @@ import React, { useEffect, useState, useCallback } from 'react';
 import { View, StyleSheet, Button, FlatList, Alert } from 'react-native';
 import api from '../utils/api';
 import TaskItem from '../components/TaskItem';
+import { useAuth } from '../context/AuthContext';
+import CustomButton from '../context/CustomButton';
 
 const TasksScreen = ({ navigation, route }) => {
     const [tasks, setTasks] = useState([]);
+    const { user } = useAuth();
 
     useEffect(() => {
         fetchTasks();
     }, []);
 
-    //sync when new task is added
     useEffect(() => {
         if (route.params?.newTask) {
             const newTask = route.params.newTask;
@@ -18,7 +20,6 @@ const TasksScreen = ({ navigation, route }) => {
         }
     }, [route.params?.newTask]);
 
-    //sync when task is updated
     useEffect(() => {
         if (route.params?.updatedTask) {
             const updatedTask = route.params.updatedTask;
@@ -26,7 +27,6 @@ const TasksScreen = ({ navigation, route }) => {
         }
     }, [route.params?.updatedTask]);
 
-    //sync when task is deleted
     useEffect(() => {
         if (route.params?.deletedTaskId) {
             const deletedTaskId = route.params.deletedTaskId;
@@ -36,7 +36,7 @@ const TasksScreen = ({ navigation, route }) => {
 
     const fetchTasks = async () => {
         try {
-            const response = await api.get('/api/tasks');
+            const response = await api.get('/api/tasks', { params: { userId: user.id } });
             setTasks(response.data);
         } catch (error) {
             console.error('Error fetching tasks:', error);
@@ -44,7 +44,6 @@ const TasksScreen = ({ navigation, route }) => {
         }
     };
 
-    //When press on a task, direct to detail page
     const handlePressTask = useCallback((taskId) => {
         navigation.navigate('TaskDetail', { taskId });
     }, [navigation]);
@@ -64,9 +63,9 @@ const TasksScreen = ({ navigation, route }) => {
                 maxToRenderPerBatch={10} // Increase the amount of render per batch
                 windowSize={21} // Increase the window size
             />
-            <Button
+            <CustomButton
                 title="Add Task"
-                onPress={() => navigation.navigate('AddTask')}
+                onPress={() => navigation.navigate('AddTask', { userId: user.id })}
             />
         </View>
     );
@@ -81,5 +80,6 @@ const styles = StyleSheet.create({
 });
 
 export default TasksScreen;
+
 
 

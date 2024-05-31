@@ -1,17 +1,24 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, Button, StyleSheet, Alert } from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import api from '../utils/api';
+import { useAuth } from '../context/AuthContext';
 
 const LoginScreen = ({ navigation }) => {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
+    const { login } = useAuth();
 
     const handleLogin = async () => {
         try {
             const response = await api.post('/api/auth/login', { username, password });
             // Assuming the response contains a token
-            const { token } = response.data;
-            // Save the token (you might use AsyncStorage or Context API)
+            const { token, user } = response.data;
+            //store the token
+            await AsyncStorage.setItem('token', token);
+            //Update context with user's data
+            login(user);
+            // Save the token (you might use AsyncStorage or Context API) 
             console.log('Login successful, token:', token);
             Alert.alert('Login successful!');
             // Navigate to task screen
@@ -52,11 +59,6 @@ const styles = StyleSheet.create({
         flex: 1,
         justifyContent: 'center',
         padding: 16,
-    },
-    title: {
-        fontSize: 24,
-        marginBottom: 16,
-        textAlign: 'center',
     },
     input: {
         height: 40,

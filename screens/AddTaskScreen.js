@@ -1,13 +1,14 @@
 import React, { useState } from 'react';
-import { View, TextInput, Button, StyleSheet, Alert, Platform } from 'react-native';
-import DateTimePicker from '@react-native-community/datetimepicker';
+import { View, TextInput, Button, StyleSheet, Alert } from 'react-native';
 import api from '../utils/api';
+import { useAuth } from '../context/AuthContext';
 
-const AddTaskScreen = ({ navigation }) => {
+const AddTaskScreen = ({ navigation, route }) => {
+	const { userId } = route.params;
+	const { user } = useAuth();
 	const [title, setTitle] = useState('');
 	const [description, setDescription] = useState('');
-	const [dueDate, setDueDate] = useState(new Date());
-	const [showDatePicker, setShowDatePicker] = useState(false);
+	const [dueDate, setDueDate] = useState('');
 	const [status, setStatus] = useState('');
 
 	const formatDate = (date) => {
@@ -19,21 +20,20 @@ const AddTaskScreen = ({ navigation }) => {
 	};
 
 	const handleAddTask = async () => {
+		if (!user || !user.id) {
+			Alert.alert('Error', 'User not authenticated');
+			return;
+			}
+
+		const formattedDueDate = formatDate(dueDate);
 		try {
-			const formattedDueDate = formatDate(dueDate);
-			const response = await api.post('/api/tasks', { title, description, dueDate: formattedDueDate, status });
+			const response = await api.post('/api/tasks', { title, description, dueDate: formattedDueDate, status, userId: user.id });
 			Alert.alert('Task added successfully!');
 			navigation.navigate('TasksHome', { newTask: response.data });
 		} catch (error) {
 			console.error('Error adding task:', error);
 			Alert.alert('Error adding task', 'An error occurred');
 		}
-	};
-
-	const handleDateChange = (event, selectedDate) => {
-		const currentDate = selectedDate || dueDate;
-		setShowDatePicker(Platform.OS === 'ios');
-		setDueDate(currentDate);
 	};
 
 	return (
@@ -53,18 +53,9 @@ const AddTaskScreen = ({ navigation }) => {
 			<TextInput
 				style={styles.input}
 				placeholder="Due Date (YYYY-MM-DD)"
-				value={formatDate(dueDate)}
-				onFocus={() => setShowDatePicker(true)}
-				showSoftInputOnFocus={false}
+				value={dueDate}
+				onChangeText={setDueDate}
 			/>
-			{showDatePicker && (
-				<DateTimePicker
-					value={dueDate}
-					mode="date"
-					display="default"
-					onChange={handleDateChange}
-				/>
-			)}
 			<TextInput
 				style={styles.input}
 				placeholder="Status"
@@ -92,4 +83,5 @@ const styles = StyleSheet.create({
 });
 
 export default AddTaskScreen;
+
 
