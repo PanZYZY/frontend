@@ -46,7 +46,8 @@ const TaskDetailScreen = ({ navigation, route }) => {
             const response = await api.put(`/tasks/${taskId}`, updatedTask, {
                 headers: { Authorization: `Bearer ${token}` }
             });
-            console.log('Updated Task Data:', response.data); // Debugging log
+            // Debugging log
+            //console.log('Updated Task Data:', response.data);
             Alert.alert('Task updated successfully!');
             navigation.navigate('TasksHome', { updatedTask: response.data });
         } catch (error) {

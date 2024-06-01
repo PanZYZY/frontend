@@ -1,65 +1,45 @@
-import React, { useEffect, useState } from 'react';
-import { View, StyleSheet, Dimensions } from 'react-native';
+import React, { useEffect, useState, useCallback } from 'react';
+import { View, StyleSheet, Text, Dimensions } from 'react-native';
 import { Calendar } from 'react-native-calendars';
+import { useIsFocused } from '@react-navigation/native';
 import api from '../utils/api';
 import { useAuth } from '../context/AuthContext';
+import { useFontSize } from '../context/FontSizeContext';
 
 const CalendarScreen = ({ navigation, route }) => {
     const [markedDates, setMarkedDates] = useState({});
     const { user } = useAuth();
+    const { fontSize } = useFontSize();
     const screenWidth = Dimensions.get('window').width;
+    const isFocused = useIsFocused();
 
-    useEffect(() => {
-        fetchTasks();
-    }, [user]);
-
-    useEffect(() => {
-        if (route.params?.newTask) {
-            fetchTasks(); // Refresh tasks when a new task is added
-        }
-    }, [route.params?.newTask]);
-
-    useEffect(() => {
-        if (route.params?.updatedTask) {
-            console.log('Updated task detected:', route.params.updatedTask); // Debugging log
-            fetchTasks(); // Refresh tasks when a task is updated
-        }
-    }, [route.params?.updatedTask]);
-
-    useEffect(() => {
-        if (route.params?.deletedTaskId) {
-            fetchTasks(); // Refresh tasks when a task is deleted
-        }
-    }, [route.params?.deletedTaskId]);
-
-    const fetchTasks = async () => {
+    const fetchTasks = useCallback(async () => {
         try {
             const response = await api.get('/tasks', { params: { userId: user.id } });
             const tasks = response.data;
-
-            // Log tasks to debug
             console.log('Fetched tasks:', tasks);
 
-            // Clear old marked dates
-            const dates = {};
-            Object.keys(markedDates).forEach(date => {
-                dates[date] = { marked: false };
-            });
-
-            // Mark new due dates
+            const newMarkedDates = {};
             tasks.forEach(task => {
                 const date = task.dueDate;
-                dates[date] = { marked: true };
+                newMarkedDates[date] = {
+                    marked: true,
+                    dots: [{ key: task.id, color: 'blue' }],
+                };
             });
 
-            // Log dates to debug
-            console.log('Updated dates:', dates);
-
-            setMarkedDates(dates);
+            console.log('Updated marked dates:', newMarkedDates);
+            setMarkedDates(newMarkedDates);
         } catch (error) {
             console.error('Error fetching tasks:', error);
         }
-    };
+    }, [user.id]);
+
+    useEffect(() => {
+        if (isFocused) {
+            fetchTasks();
+        }
+    }, [isFocused, fetchTasks]);
 
     const handleDayPress = (day) => {
         navigation.navigate('TaskList', { selectedDate: day.dateString });
@@ -67,9 +47,9 @@ const CalendarScreen = ({ navigation, route }) => {
 
     return (
         <View style={styles.container}>
+            <Text style={[styles.header, { fontSize }]}>Calendar</Text>
             <Calendar
                 markedDates={markedDates}
-                markingType={'simple'}
                 onDayPress={handleDayPress}
                 style={[styles.calendar, { width: screenWidth - 20 }]}
             />
@@ -83,9 +63,20 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         backgroundColor: 'white',
+        padding: 10,
+    },
+    header: {
+        marginVertical: 10,
+        fontWeight: 'bold',
+    },
+    calendar: {
+        borderWidth: 1,
+        borderColor: '#ddd',
+        borderRadius: 10,
     },
 });
 
 export default CalendarScreen;
+
 
 
