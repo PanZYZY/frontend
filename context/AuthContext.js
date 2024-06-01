@@ -1,32 +1,12 @@
-import React, { createContext, useState, useContext, useEffect } from 'react';
+import React, { createContext, useContext, useState, useEffect } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import api from '../utils/api';
-
+import api from '../utils/api'; // Ensure this is imported correctly
 
 const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
     const [user, setUser] = useState(null);
     const [token, setToken] = useState(null);
-
-    useEffect(() => {
-        const loadUserData = async () => {
-            try {
-                const storedToken = await AsyncStorage.getItem('token');
-                const storedUser = await AsyncStorage.getItem('user');
-                if (storedToken) {
-                    setToken(storedToken);
-                    api.defaults.headers.common['Authorization'] = `Bearer ${storedToken}`;
-                }
-                if (storedUser) {
-                    setUser(JSON.parse(storedUser));
-                }
-            } catch (error) {
-                console.error('Error loading user data:', error);
-            }
-        };
-        loadUserData();
-    }, []);
 
     useEffect(() => {
         const storeToken = async () => {
@@ -52,19 +32,35 @@ export const AuthProvider = ({ children }) => {
         setToken(null);
         await AsyncStorage.removeItem('user');
         await AsyncStorage.removeItem('token');
-        navigation.navigate('Login'); // Navigate to login screen
     };
 
-  return (
-    <AuthContext.Provider value={{ user, token, login, logout }}>
-      {children}
-    </AuthContext.Provider>
-  );
+    useEffect(() => {
+        const loadAuthData = async () => {
+            try {
+                const storedUser = await AsyncStorage.getItem('user');
+                const storedToken = await AsyncStorage.getItem('token');
+                if (storedUser && storedToken) {
+                    setUser(JSON.parse(storedUser));
+                    setToken(storedToken);
+                }
+            } catch (error) {
+                console.error('Error loading user data:', error);
+            }
+        };
+        loadAuthData();
+    }, []);
+
+    return (
+        <AuthContext.Provider value={{ user, token, login, logout }}>
+            {children}
+        </AuthContext.Provider>
+    );
 };
 
 export const useAuth = () => {
-  return useContext(AuthContext);
+    return useContext(AuthContext);
 };
+
 
 
 

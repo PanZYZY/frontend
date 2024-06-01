@@ -8,9 +8,15 @@ const SettingsScreen = ({ navigation }) => {
     const { logout } = useAuth();
     const [isLargeFont, setIsLargeFont] = useState(fontSize > 16);
 
+
     useEffect(() => {
         setIsLargeFont(fontSize > 16);
     }, [fontSize]);
+
+    const handleLogout = async () => {
+        await logout();
+        navigation.navigate('Login'); // Navigate to login screen
+    };
 
     const handleFontSizeToggle = (value) => {
         setIsLargeFont(value);
@@ -27,7 +33,7 @@ const SettingsScreen = ({ navigation }) => {
                     onValueChange={handleFontSizeToggle}
                 />
             </View>
-            <Button title="Logout" onPress={logout} />
+            <Button title="Logout" onPress={handleLogout} />
         </View>
     );
 };

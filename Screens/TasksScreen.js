@@ -39,6 +39,7 @@ const TasksScreen = ({ navigation, route }) => {
 
     const fetchTasks = async () => {
         try {
+            if (!user) return;
             const response = await api.get('/tasks', {
                 headers: { Authorization: `Bearer ${token}` },
                 params: { userId: user.id },

@@ -15,6 +15,7 @@ const CalendarScreen = ({ navigation, route }) => {
 
     const fetchTasks = useCallback(async () => {
         if (!user) return; // Ensure user is not null
+
         try {
             const response = await api.get('/tasks', {
                 headers: { Authorization: `Bearer ${token}` },
@@ -32,14 +33,12 @@ const CalendarScreen = ({ navigation, route }) => {
                 };
             });
 
-            // Debug log
-            //console.log('Updated marked dates:', newMarkedDates);
-
+            console.log('Updated marked dates:', newMarkedDates);
             setMarkedDates(newMarkedDates);
         } catch (error) {
             console.error('Error fetching tasks:', error);
         }
-    }, [user.id]);
+    }, [user, token]);
 
     useEffect(() => {
         if (isFocused) {
@@ -47,23 +46,32 @@ const CalendarScreen = ({ navigation, route }) => {
         }
     }, [isFocused, fetchTasks]);
 
-    const handleDayPress = (day) => {
+    const handleDayPress = useCallback((day) => {
         navigation.navigate('TaskList', { selectedDate: day.dateString });
-    };
+    }, [navigation]);
 
     if (!user) {
         return (
-            <View style={styles.container}>
-                <Text style={[styles.header, { fontSize }]}>Calendar</Text>
-                <Calendar
-                    markedDates={markedDates}
-                    markingType={'multi-dot'}
-                    onDayPress={handleDayPress}
-                    style={[styles.calendar, { width: screenWidth - 20 }]}
-                />
-            </View>
+            navigation.navigate('Login')
         );
     }
+
+    return (
+        <View style={styles.container}>
+            <Text style={[styles.header, { fontSize }]}>Calendar</Text>
+            <Calendar
+                markedDates={markedDates}
+                markingType={'multi-dot'}
+                onDayPress={handleDayPress}
+                style={[styles.calendar, { width: screenWidth - 20 }]}
+                theme={{
+                    textDayFontSize: fontSize,
+                    textMonthFontSize: fontSize + 2,
+                    textDayHeaderFontSize: fontSize - 2,
+                }}
+            />
+        </View>
+    );
 };
 
 const styles = StyleSheet.create({
@@ -77,6 +85,9 @@ const styles = StyleSheet.create({
     header: {
         marginVertical: 10,
         fontWeight: 'bold',
+    },
+    text: {
+        color: 'gray',
     },
     calendar: {
         borderWidth: 1,
