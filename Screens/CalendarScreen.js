@@ -6,40 +6,24 @@ import { useAuth } from '../context/AuthContext';
 
 const CalendarScreen = ({ navigation, route }) => {
   const [markedDates, setMarkedDates] = useState({});
-  const { user, token } = useAuth();
+  const { user } = useAuth();
 
   useEffect(() => {
-    if (user && token) {
+    if (user ) {
       fetchTasks();
     }
-  }, [user, token]);
+  }, [user]);
 
   useEffect(() => {
-    if (route.params?.newTask) {
-      const newTask = route.params.newTask;
-      updateMarkedDates(newTask.dueDate);
+    if (route.params?.newTask || route.params?.updatedTask || route.params?.deletedTaskId) {
+      fetchTasks();
     }
-  }, [route.params?.newTask]);
+  }, [route.params?.newTask, route.params?.updatedTask, route.params?.deletedTaskId]);
 
-  useEffect(() => {
-    if (route.params?.updatedTask) {
-      const updatedTask = route.params.updatedTask;
-      updateMarkedDates(updatedTask.dueDate);
-    }
-  }, [route.params?.updatedTask]);
-
-  useEffect(() => {
-    if (route.params?.deletedTaskId) {
-      removeMarkedDate(route.params.deletedTaskId);
-    }
-  }, [route.params?.deletedTaskId]);
 
   const fetchTasks = async () => {
     try {
-      const response = await api.get('/tasks', { 
-          headers: { Authorization: `Bearer ${token}` },
-          params: { userId: user.id } 
-      });
+      const response = await api.get('/tasks', { params: { userId: user.id } });
       const tasks = response.data;
       const dates = {};
       tasks.forEach(task => {
@@ -54,34 +38,6 @@ const CalendarScreen = ({ navigation, route }) => {
     }
   };
 
-  const updateMarkedDates = (date) => {
-    setMarkedDates(prevDates => ({
-      ...prevDates,
-      [date]: { marked: true },
-    }));
-  };
-
-  const removeMarkedDate = async (taskId) => {
-    try {
-      const response = await api.get('/api/tasks', { 
-          headers: { Authorization: `Bearer ${token}` },
-          params: { userId: user.id } 
-      });
-      const tasks = response.data;
-      const task = tasks.find(t => t.id === taskId);
-      if (task) {
-        const date = task.dueDate;
-        const dates = { ...markedDates };
-           const remainingTasks = tasks.filter(t => t.dueDate === date && t.id !== taskId);
-           if (remainingTasks.length === 0){
-        delete dates[date];
-        }
-        setMarkedDates(dates);
-      }
-    } catch (error) {
-      console.error('Error fetching tasks:', error);
-    }
-  };
 
   const handleDayPress = (day) => {
     navigation.navigate('TaskList', { selectedDate: day.dateString });

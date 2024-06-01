@@ -15,31 +15,38 @@ const TasksScreen = ({ navigation, route }) => {
         }
     }, [user, token]);
 
-    //hook for adding new task
+    // Hook for adding new task
     useEffect(() => {
         if (route.params?.newTask) {
+            console.log('New Task added:', route.params.newTask);
             const newTask = route.params.newTask;
             setTasks((prevTasks) => [...prevTasks, newTask]);
         }
     }, [route.params?.newTask]);
 
-    //hook when updating task
+    // Hook when updating task
     useEffect(() => {
         if (route.params?.updatedTask) {
+            console.log('Updated Task:', route.params.updatedTask);
             const updatedTask = route.params.updatedTask;
-            setTasks((prevTasks) => prevTasks.map(task => task.id === updatedTask.id ? updatedTask : task));
+            setTasks((prevTasks) => 
+                prevTasks.map(task => 
+                        task.id === updatedTask.id ? { ...task, ...updatedTask } : task
+                )
+            );
         }
     }, [route.params?.updatedTask]);
 
-    //hook for deleting task
+    // Hook for deleting task
     useEffect(() => {
         if (route.params?.deletedTaskId) {
+            console.log('Deleted Task ID:', route.params.deletedTaskId);
             const deletedTaskId = route.params.deletedTaskId;
             setTasks((prevTasks) => prevTasks.filter(task => task.id !== deletedTaskId));
         }
     }, [route.params?.deletedTaskId]);
 
-    //fetch task function
+    // Fetch task function
     const fetchTasks = async () => {
         try {
             const response = await api.get('/tasks', {
@@ -53,7 +60,7 @@ const TasksScreen = ({ navigation, route }) => {
         }
     };
 
-    //go to detail when pressed on task
+    // Go to detail when pressed on task
     const handlePressTask = useCallback((taskId) => {
         navigation.navigate('TaskDetail', { taskId });
     }, [navigation]);

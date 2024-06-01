@@ -4,7 +4,6 @@ import api from '../utils/api';
 import { useAuth } from '../context/AuthContext';
 
 const AddTaskScreen = ({ navigation, route }) => {
-
 	const [title, setTitle] = useState('');
 	const [description, setDescription] = useState('');
 	const [dueDate, setDueDate] = useState('');
@@ -20,19 +19,21 @@ const AddTaskScreen = ({ navigation, route }) => {
 	};
 
 	const handleAddTask = async () => {
+		//Check if user is authenticated
 		if (!user || !token ) {
 			Alert.alert('Error', 'User not authenticated');
 			return;
 			}
-
+		//Format the due date
 		const formattedDueDate = formatDate(dueDate);
+
 		try {
 			const response = await api.post('/tasks', 
 			{ title, description, dueDate: formattedDueDate, status, userId: user.id },
 			{ headers: { Authorization: `Bearer ${token}` } }
 			);
 			Alert.alert('Task added successfully!');
-			navigation.navigate('TasksHome', { refresh: true });
+			navigation.navigate('TasksHome', { newTask: response.data });
 		} catch (error) {
 			console.error('Error adding task:', error);
 			Alert.alert('Error adding task', 'An error occurred');

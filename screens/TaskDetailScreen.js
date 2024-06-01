@@ -5,21 +5,28 @@ import { useAuth } from '../context/AuthContext';
 
 const TaskDetailScreen = ({ navigation, route }) => {
     const { taskId } = route.params;
-    const [task, setTask] = useState(null);
     const { user, token } = useAuth();
+    const [task, setTask] = useState(null);
+    const [title, setTitle] = useState('');
+    const [description, setDescription] = useState('');
+    const [dueDate, setDueDate] = useState('');
+    const [status, setStatus] = useState('');
 
     useEffect(() => {
-        if (taskId && token) {
-            fetchTask();
-        }
-    }, [taskId, token]);
+        fetchTask();
+    }, [taskId]);
 
     const fetchTask = async () => {
         try {
             const response = await api.get(`/tasks/${taskId}`, { 
-                headers: { Authorization: `Bearer ${token}` },
-                params: { userId: user.id } });
-            setTask(response.data);
+                headers: { Authorization: `Bearer ${token}` }
+            });
+            const task = response.data;
+            setTask(task);
+            setTitle(task.title);
+            setDescription(task.description);
+            setDueDate(task.dueDate);
+            setStatus(task.status);
         } catch (error) {
             console.error('Error fetching task:', error);
             Alert.alert('Error', 'Could not fetch task');
@@ -27,13 +34,18 @@ const TaskDetailScreen = ({ navigation, route }) => {
     };
 
     const handleUpdateTask = async () => {
+        const updatedTaskData = {
+            title,
+            description,
+            dueDate,
+            status,
+            userId: user.id
+    };
         try {
-            const response = await api.put(`/tasks/${task.id}`, { 
-                ...task, 
-                userId: user.id 
-            }, {
+            const response = await api.put(`/tasks/${taskId}`, updatedTaskData, {
                 headers: { Authorization: `Bearer ${token}` }
             });
+            console.log('Updated Task Data:', updatedTaskData); // Debugging log
             Alert.alert('Task updated successfully!');
             navigation.navigate('TasksHome', { updatedTask: response.data });
         } catch (error) {
@@ -44,12 +56,12 @@ const TaskDetailScreen = ({ navigation, route }) => {
 
     const handleDeleteTask = async () => {
         try {
-            await api.delete(`/tasks/${task.id}`, { 
+            await api.delete(`/tasks/${taskId}`, { 
                 headers: { Authorization: `Bearer ${token}` },
                 params: { userId: user.id } 
             });
             Alert.alert('Task deleted successfully!');
-            navigation.navigate('TasksHome', { deletedTaskId: task.id });
+            navigation.navigate('TasksHome', { deletedTaskId: taskId });
         } catch (error) {
             console.error('Error deleting task:', error);
             Alert.alert('Error', 'Could not delete task');
