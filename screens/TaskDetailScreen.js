@@ -1,40 +1,41 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, TextInput, Button, StyleSheet, Alert } from 'react-native';
+import { View, TextInput, Button, StyleSheet, Alert } from 'react-native';
 import api from '../utils/api';
 import { useAuth } from '../context/AuthContext';
 
-const TaskDetailScreen = ({ route, navigation }) => {
+const TaskDetailScreen = ({ navigation, route }) => {
     const { taskId } = route.params;
     const [task, setTask] = useState(null);
-    const [title, setTitle] = useState('');
-    const [description, setDescription] = useState('');
-    const [dueDate, setDueDate] = useState('');
-    const [status, setStatus] = useState('');
+    const { user, token } = useAuth();
 
     useEffect(() => {
-        fetchTaskDetails();
-    }, [taskId]);
+        if (taskId && token) {
+            fetchTask();
+        }
+    }, [taskId, token]);
 
-    const fetchTaskDetails = async () => {
+    const fetchTask = async () => {
         try {
-            const response = await api.get(`/tasks/${taskId}`, { params: { userId: user.id } });
-            const task = response.data;
-            setTask(task);
-            setTitle(task.title);
-            setDescription(task.description);
-            setDueDate(task.dueDate);
-            setStatus(task.status);
+            const response = await api.get(`/tasks/${taskId}`, { 
+                headers: { Authorization: `Bearer ${token}` },
+                params: { userId: user.id } });
+            setTask(response.data);
         } catch (error) {
             console.error('Error fetching task:', error);
-            Alert.alert('Error', 'Could not fetch task details');
+            Alert.alert('Error', 'Could not fetch task');
         }
     };
 
     const handleUpdateTask = async () => {
         try {
-            await api.put(`/tasks/${taskId}`, { title,userId: user.id, description, dueDate, status });
-            Alert.alert('Success', 'Task updated successfully');
-            navigation.navigate('TasksHome', { updatedTask: { id: taskId, title, description, dueDate, status } });
+            const response = await api.put(`/tasks/${task.id}`, { 
+                ...task, 
+                userId: user.id 
+            }, {
+                headers: { Authorization: `Bearer ${token}` }
+            });
+            Alert.alert('Task updated successfully!');
+            navigation.navigate('TasksHome', { updatedTask: response.data });
         } catch (error) {
             console.error('Error updating task:', error);
             Alert.alert('Error', 'Could not update task');
@@ -43,48 +44,45 @@ const TaskDetailScreen = ({ route, navigation }) => {
 
     const handleDeleteTask = async () => {
         try {
-            await api.delete(`/tasks/${taskId}`, { params: { userId: user.id } });
-            Alert.alert('Success', 'Task deleted successfully');
-            navigation.navigate('TasksHome', { deletedTaskId: taskId });
+            await api.delete(`/tasks/${task.id}`, { 
+                headers: { Authorization: `Bearer ${token}` },
+                params: { userId: user.id } 
+            });
+            Alert.alert('Task deleted successfully!');
+            navigation.navigate('TasksHome', { deletedTaskId: task.id });
         } catch (error) {
             console.error('Error deleting task:', error);
             Alert.alert('Error', 'Could not delete task');
         }
     };
 
-    if (!task) {
-        return (
-            <View style={styles.container}>
-                <Text>No task available.</Text>
-            </View>
-        );
-    }
+    if (!task) return null;
 
     return (
         <View style={styles.container}>
             <TextInput
                 style={styles.input}
                 placeholder="Title"
-                value={title}
-                onChangeText={setTitle}
+                value={task.title}
+                onChangeText={(text) => setTask({ ...task, title: text })}
             />
             <TextInput
                 style={styles.input}
                 placeholder="Description"
-                value={description}
-                onChangeText={setDescription}
+                value={task.description}
+                onChangeText={(text) => setTask({ ...task, description: text })}
             />
             <TextInput
                 style={styles.input}
                 placeholder="Due Date (YYYY-MM-DD)"
-                value={dueDate}
-                onChangeText={setDueDate}
+                value={task.dueDate}
+                onChangeText={(text) => setTask({ ...task, dueDate: text })}
             />
             <TextInput
                 style={styles.input}
                 placeholder="Status"
-                value={status}
-                onChangeText={setStatus}
+                value={task.status}
+                onChangeText={(text) => setTask({ ...task, status: text })}
             />
             <Button title="Update Task" onPress={handleUpdateTask} />
             <Button title="Delete Task" onPress={handleDeleteTask} />
@@ -108,3 +106,5 @@ const styles = StyleSheet.create({
 });
 
 export default TaskDetailScreen;
+
+

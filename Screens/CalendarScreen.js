@@ -6,11 +6,13 @@ import { useAuth } from '../context/AuthContext';
 
 const CalendarScreen = ({ navigation, route }) => {
   const [markedDates, setMarkedDates] = useState({});
-  const { user } = useAuth();
+  const { user, token } = useAuth();
 
   useEffect(() => {
-    fetchTasks();
-  }, [user]);
+    if (user && token) {
+      fetchTasks();
+    }
+  }, [user, token]);
 
   useEffect(() => {
     if (route.params?.newTask) {
@@ -34,7 +36,10 @@ const CalendarScreen = ({ navigation, route }) => {
 
   const fetchTasks = async () => {
     try {
-      const response = await api.get('/api/tasks', { params: { userId: user.id } });
+      const response = await api.get('/tasks', { 
+          headers: { Authorization: `Bearer ${token}` },
+          params: { userId: user.id } 
+      });
       const tasks = response.data;
       const dates = {};
       tasks.forEach(task => {
@@ -58,7 +63,10 @@ const CalendarScreen = ({ navigation, route }) => {
 
   const removeMarkedDate = async (taskId) => {
     try {
-      const response = await api.get('/api/tasks', { params: { userId: user.id } });
+      const response = await api.get('/api/tasks', { 
+          headers: { Authorization: `Bearer ${token}` },
+          params: { userId: user.id } 
+      });
       const tasks = response.data;
       const task = tasks.find(t => t.id === taskId);
       if (task) {

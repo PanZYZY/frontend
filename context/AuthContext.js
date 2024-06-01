@@ -2,6 +2,7 @@ import React, { createContext, useState, useContext, useEffect } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import api from '../utils/api';
 
+
 const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
@@ -9,32 +10,47 @@ export const AuthProvider = ({ children }) => {
   const [token, setToken] = useState(null);
 
   useEffect(() => {
-    const loadToken = async () => {
-      const storedToken = await AsyncStorage.getItem('token');
-      if (storedToken) {
-        setToken(storedToken);
-        try {
-          const response = await api.get('/auth/me', {
-            headers: {
-              Authorization: `Bearer ${storedToken}`,
-            },
-          });
-          setUser(response.data);
-        } catch (error) {
-          console.error('Error fetching user data:', error);
-        }
-      }
-    };
-    loadToken();
-  }, []);
+      const loadUserData = async () => {
+          try{
+                const storedToken = await AsyncStorage.getItem('token');
+                const storedUser = await AsyncStorage.getItem('user');
+                if (storedToken) {
+                    setToken(storedToken);
+                    api.defaults.headers.common['Authorization'] = `Bearer ${storedToken}`;
+                }
+                if (storedUser) {
+                    setUser(JSON.parse(storedUser));
+                }
+            } catch (error) {
+                console.error('Error loading user data:', error);
+            }
+        };
+        loadUserData();
+    }, []);
 
-  const login = (userData) => {
+  useEffect(() => {
+    const storeToken = async () => {
+        if (token) {
+            await AsyncStorage.setItem('token',token);
+            api.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+        } else {
+            await AsyncStorage.removeItem('token');
+            delete api.defaults.headers.common['Authorization'];
+        }
+    };
+    storeToken();
+  }, [token]);
+
+  const login = async (userData, authToken) => {
     setUser(userData);
+    setToken(authToken);
+    await AsyncStorage.setItem('user', JSON.stringify(userData));
   };
 
   const logout = async () => {
     setUser(null);
     setToken(null);
+    await AsyncStorage.removeItem('user');
     await AsyncStorage.removeItem('token');
   };
 
@@ -48,4 +64,5 @@ export const AuthProvider = ({ children }) => {
 export const useAuth = () => {
   return useContext(AuthContext);
 };
+
 

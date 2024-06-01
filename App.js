@@ -6,13 +6,13 @@ import { AuthProvider } from './context/AuthContext';
 
 const App = () => {
     return (
-        <AuthProvider>
-            <FontSizeProvider>
-                <NavigationContainer>
+        <NavigationContainer>
+            <AuthProvider>
+                <FontSizeProvider>
                     <RootNavigator />
-                 </NavigationContainer>
-            </FontSizeProvider>
-        </AuthProvider>
+                </FontSizeProvider>
+            </AuthProvider>
+        </NavigationContainer>
     );
 };
 

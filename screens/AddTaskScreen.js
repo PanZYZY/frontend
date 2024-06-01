@@ -9,7 +9,7 @@ const AddTaskScreen = ({ navigation, route }) => {
 	const [description, setDescription] = useState('');
 	const [dueDate, setDueDate] = useState('');
 	const [status, setStatus] = useState('');
-	const { user } = useAuth();
+	const { user, token } = useAuth();
 
 	const formatDate = (date) => {
 		const d = new Date(date);
@@ -20,14 +20,17 @@ const AddTaskScreen = ({ navigation, route }) => {
 	};
 
 	const handleAddTask = async () => {
-		if (!user ) {
+		if (!user || !token ) {
 			Alert.alert('Error', 'User not authenticated');
 			return;
 			}
 
 		const formattedDueDate = formatDate(dueDate);
 		try {
-			const response = await api.post('/tasks', { title, description, dueDate: formattedDueDate, status, userId: user.id });
+			const response = await api.post('/tasks', 
+			{ title, description, dueDate: formattedDueDate, status, userId: user.id },
+			{ headers: { Authorization: `Bearer ${token}` } }
+			);
 			Alert.alert('Task added successfully!');
 			navigation.navigate('TasksHome', { refresh: true });
 		} catch (error) {

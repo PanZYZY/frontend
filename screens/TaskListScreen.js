@@ -1,54 +1,45 @@
-import React, { useEffect, useState } from 'react';
-import { View, Text, StyleSheet, FlatList, Alert } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { View, FlatList, StyleSheet, Alert, Text } from 'react-native';
 import api from '../utils/api';
+import { useAuth } from '../context/AuthContext';
+import TaskItem from '../components/TaskItem';
 
-const TaskListScreen = ({ route }) => {
+const TaskListScreen = ({ route, navigation }) => {
     const { selectedDate } = route.params;
     const [tasks, setTasks] = useState([]);
+    const { user, token } = useAuth();
 
-    //Fetch tasks from selected date
     useEffect(() => {
-        fetchTasksForDate(selectedDate);
-    }, [selectedDate]);
-    //Sync when a task is updated
-    useEffect(() => {
-        if (route.params?.updatedTask) {
-            const updatedTask = route.params.updatedTask;
-            setTasks((prevTasks) => prevTasks.map(task => task.id === updatedTask.id ? updatedTask : task));
+        if (user && token) {
+            fetchTasksForDate();
         }
-    }, [route.params?.updatedTask]);
-    //Sync when a task is deleted
-    useEffect(() => {
-        if (route.params?.deletedTaskId) {
-            const deletedTaskId = route.params.deletedTaskId;
-            setTasks((prevTasks) => prevTasks.filter(task => task.id !== deletedTaskId));
-        }
-    }, [route.params?.deletedTaskId]);
+    }, [selectedDate, user, token]);
 
-    const fetchTasksForDate = async (date) => {
+    const fetchTasksForDate = async () => {
         try {
-            const response = await api.get('/tasks');
-            const allTasks = response.data;
-            const filteredTasks = allTasks.filter(task => task.dueDate === date);
-            setTasks(filteredTasks);
+            const response = await api.get('/tasks', {
+                headers: { Authorization: `Bearer ${token}` },
+                params: { userId: user.id }
+            });
+            const tasksForDate = response.data.filter(task => task.dueDate === selectedDate);
+            setTasks(tasksForDate);
         } catch (error) {
             console.error('Error fetching tasks:', error);
             Alert.alert('Error', 'Could not fetch tasks');
         }
     };
-    //Render task details
+
+    const handlePressTask = (taskId) => {
+        navigation.navigate('TaskDetail', { taskId });
+    };
+
     const renderTask = ({ item }) => (
-        <View style={styles.taskItem}>
-            <Text style={styles.taskTitle}>{item.title}</Text>
-            <Text>Description: {item.description}</Text>
-            <Text>Due Date: {item.dueDate}</Text>
-            <Text>Status: {item.status}</Text>
-        </View>
+        <TaskItem task={item} onPress={handlePressTask} />
     );
 
     return (
         <View style={styles.container}>
-            <Text style={styles.header}>Tasks for {selectedDate}</Text>
+            <Text style={styles.dateHeader}>{selectedDate}</Text>
             <FlatList
                 data={tasks}
                 renderItem={renderTask}
@@ -61,22 +52,16 @@ const TaskListScreen = ({ route }) => {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: 'white',
         padding: 16,
+        backgroundColor: 'white',
     },
-    header: {
+    dateHeader: {
         fontSize: 20,
         fontWeight: 'bold',
         marginBottom: 16,
     },
-    taskItem: {
-        padding: 10,
-        borderBottomWidth: 1,
-        borderBottomColor: '#ccc',
-    },
-    taskTitle: {
-        fontWeight: 'bold',
-    },
 });
 
 export default TaskListScreen;
+
+

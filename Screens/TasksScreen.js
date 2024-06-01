@@ -7,12 +7,15 @@ import CustomButton from '../components/CustomButton';
 
 const TasksScreen = ({ navigation, route }) => {
     const [tasks, setTasks] = useState([]);
-    const { user } = useAuth();
+    const { user, token } = useAuth();
 
     useEffect(() => {
+        if (user && token) {
         fetchTasks();
-    }, [user]);
+        }
+    }, [user, token]);
 
+    //hook for adding new task
     useEffect(() => {
         if (route.params?.newTask) {
             const newTask = route.params.newTask;
@@ -20,6 +23,7 @@ const TasksScreen = ({ navigation, route }) => {
         }
     }, [route.params?.newTask]);
 
+    //hook when updating task
     useEffect(() => {
         if (route.params?.updatedTask) {
             const updatedTask = route.params.updatedTask;
@@ -27,6 +31,7 @@ const TasksScreen = ({ navigation, route }) => {
         }
     }, [route.params?.updatedTask]);
 
+    //hook for deleting task
     useEffect(() => {
         if (route.params?.deletedTaskId) {
             const deletedTaskId = route.params.deletedTaskId;
@@ -34,9 +39,13 @@ const TasksScreen = ({ navigation, route }) => {
         }
     }, [route.params?.deletedTaskId]);
 
+    //fetch task function
     const fetchTasks = async () => {
         try {
-            const response = await api.get('/tasks', { params: { userId: user.id } });
+            const response = await api.get('/tasks', {
+                headers: { Authorization: `Bearer ${token}` },
+                params: {userId: user.id }
+                });
             setTasks(response.data);
         } catch (error) {
             console.error('Error fetching tasks:', error);
@@ -44,6 +53,7 @@ const TasksScreen = ({ navigation, route }) => {
         }
     };
 
+    //go to detail when pressed on task
     const handlePressTask = useCallback((taskId) => {
         navigation.navigate('TaskDetail', { taskId });
     }, [navigation]);
