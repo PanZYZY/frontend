@@ -2,11 +2,12 @@ import React from 'react';
 import { TouchableOpacity, Text, StyleSheet } from 'react-native';
 import { useFontSize } from '../context/FontSizeContext';
 
-const CustomButton = ({ title, onPress, color }) => {
+const CustomButton = ({ title, onPress, style, icon }) => {
     const { fontSize } = useFontSize();
 
     return (
-        <TouchableOpacity onPress={onPress} style={[styles.button, { backgroundColor: color || '#007BFF' }]}>
+        <TouchableOpacity onPress={onPress} style={[styles.button, style]}>
+            {icon}
             <Text style={[styles.buttonText, { fontSize }]}>{title}</Text>
         </TouchableOpacity>
     );
@@ -14,15 +15,17 @@ const CustomButton = ({ title, onPress, color }) => {
 
 const styles = StyleSheet.create({
     button: {
+        flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'center',
-        paddingVertical: 10,
-        paddingHorizontal: 20,
-        borderRadius: 4,
-        marginVertical: 5,
+        backgroundColor: 'blue',
+        padding: 10,
+        borderRadius: 5,
+        margin: 10,
     },
     buttonText: {
         color: '#fff',
+        marginLeft: 5,
     },
 });
 

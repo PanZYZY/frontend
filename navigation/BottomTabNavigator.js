@@ -1,6 +1,7 @@
 import React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createStackNavigator } from '@react-navigation/stack';
+import { Ionicons } from 'react-native-vector-icons';
 import TasksScreen from '../screens/TasksScreen';
 import CalendarScreen from '../screens/CalendarScreen';
 import TaskListScreen from '../screens/TaskListScreen';
@@ -33,7 +34,35 @@ function CalendarStack() {
 
 function BottomTabNavigator() {
     return (
-        <Tab.Navigator>
+        <Tab.Navigator
+            screenOptions={({ route }) => ({
+                tabBarIcon: ({ focused, color, size }) => {
+                    let iconName;
+                    if (route.name === 'Tasks') {
+                        iconName = focused ? 'list' : 'list-outline';
+                    } else if (route.name === 'Calendar') {
+                        iconName = focused ? 'calendar' : 'calendar-outline';
+                    } else if (route.name === 'About') {
+                        iconName = focused ? 'information-circle' : 'information-circle-outline';
+                    } else if (route.name === 'Settings') {
+                        iconName = focused ? 'settings' : 'settings-outline';
+                    }
+                    return <Ionicons name={iconName} size={size} color={color} />;
+                },
+            })}
+            tabBarOptions={{
+                activeTintColor: 'tomato',
+                inactiveTintColor: 'gray',
+                style: {
+                    backgroundColor: 'white',
+                    borderTopWidth: 0,
+                    elevation: 5,
+                },
+                labelStyle: {
+                    fontSize: 12,
+                },
+            }}
+        >
             <Tab.Screen name="Tasks" component={TasksStack} />
             <Tab.Screen name="Calendar" component={CalendarStack} />
             <Tab.Screen name="About" component={AboutScreen} />
@@ -43,5 +72,6 @@ function BottomTabNavigator() {
 }
 
 export default BottomTabNavigator;
+
 
 

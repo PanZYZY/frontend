@@ -1,52 +1,62 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, Button, StyleSheet, Alert, Switch } from 'react-native';
+import { View, Text, Button, StyleSheet, Switch } from 'react-native';
+import { useFontSize } from '../context/FontSizeContext';
 import { useAuth } from '../context/AuthContext';
-import { useFontSize } from '../context/FontSizeContext'; // If you have a FontSizeContext
 
 const SettingsScreen = ({ navigation }) => {
-  const { logout } = useAuth();
-  const { fontSize, updateFontSize } = useFontSize();
-  const [isLargeFont, setIsLargeFont] = useState(fontSize === 20);
+    const { fontSize, updateFontSize } = useFontSize();
+    const { logout } = useAuth();
+    const [isLargeFont, setIsLargeFont] = useState(fontSize > 16);
 
-  useEffect(() => {
-    setIsLargeFont(fontSize === 20);
-  }, [fontSize]);
+    useEffect(() => {
+        setIsLargeFont(fontSize > 16);
+    }, [fontSize]);
 
-  const handleFontSizeChange = () => {
-    const newFontSize = isLargeFont ? 16 : 20;
-    updateFontSize(newFontSize);
-    setIsLargeFont(!isLargeFont);
-  };
+    const handleFontSizeToggle = (value) => {
+        setIsLargeFont(value);
+        const newFontSize = value ? 30 : 16;
+        updateFontSize(newFontSize);
+    };
 
-  const handleLogout = () => {
-    logout();
-    navigation.navigate('Login');
-  };
-
-  return (
-    <View style={styles.container}>
-      <Text style={[styles.label, { fontSize }]}>Font Size</Text>
-      <Switch
-        value={isLargeFont}
-        onValueChange={handleFontSizeChange}
-      />
-      <Button title="Logout" onPress={handleLogout} />
-    </View>
-  );
+    return (
+        <View style={styles.container}>
+            <View style={styles.switchContainer}>
+                <Text style={[styles.label, { fontSize }]}>Enable Large Font</Text>
+                <Switch
+                    value={isLargeFont}
+                    onValueChange={handleFontSizeToggle}
+                />
+            </View>
+            <Button title="Logout" onPress={logout} />
+        </View>
+    );
 };
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    padding: 16,
-    backgroundColor: 'white',
-  },
-  label: {
-    fontSize: 16,
-    marginBottom: 16,
-  },
+    container: {
+        flex: 1,
+        justifyContent: 'Top',
+        alignItems: 'center',
+        padding: 20,
+        backgroundColor: '#f5f5f5',
+    },
+    switchContainer: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        marginBottom: 50,
+    },
+    label: {
+        fontSize: 16,
+        marginRight: 10,
+    },
 });
 
 export default SettingsScreen;
+
+
+
+
+
+
+
+

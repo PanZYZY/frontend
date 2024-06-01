@@ -35,14 +35,15 @@ const TaskDetailScreen = ({ navigation, route }) => {
 
     const handleUpdateTask = async () => {
         try {
-            const updatedTaskData = {
-                title,
-                description,
-                dueDate,
-                status,
+            const updatedTask = {
+                ...task,
+                title: title,
+                description: description,
+                dueDate: dueDate,
+                status: status,
                 userId: user.id
             };
-            const response = await api.put(`/tasks/${taskId}`, updatedTaskData, {
+            const response = await api.put(`/tasks/${taskId}`, updatedTask, {
                 headers: { Authorization: `Bearer ${token}` }
             });
             console.log('Updated Task Data:', response.data); // Debugging log
@@ -74,26 +75,26 @@ const TaskDetailScreen = ({ navigation, route }) => {
             <TextInput
                 style={styles.input}
                 placeholder="Title"
-                value={task.title}
-                onChangeText={(text) => setTask({ ...task, title: text })}
+                value={title}
+                onChangeText={setTitle}
             />
             <TextInput
                 style={styles.input}
                 placeholder="Description"
-                value={task.description}
-                onChangeText={(text) => setTask({ ...task, description: text })}
+                value={description}
+                onChangeText={setDescription}
             />
             <TextInput
                 style={styles.input}
                 placeholder="Due Date (YYYY-MM-DD)"
-                value={task.dueDate}
-                onChangeText={(text) => setTask({ ...task, dueDate: text })}
+                value={dueDate}
+                onChangeText={setDueDate}
             />
             <TextInput
                 style={styles.input}
                 placeholder="Status"
-                value={task.status}
-                onChangeText={(text) => setTask({ ...task, status: text })}
+                value={status}
+                onChangeText={setStatus}
             />
             <Button title="Update Task" onPress={handleUpdateTask} />
             <Button title="Delete Task" onPress={handleDeleteTask} />
