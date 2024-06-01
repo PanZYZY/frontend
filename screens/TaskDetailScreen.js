@@ -18,7 +18,7 @@ const TaskDetailScreen = ({ navigation, route }) => {
 
     const fetchTask = async () => {
         try {
-            const response = await api.get(`/tasks/${taskId}`, { 
+            const response = await api.get(`/tasks/${taskId}`, {
                 headers: { Authorization: `Bearer ${token}` }
             });
             const task = response.data;
@@ -34,18 +34,18 @@ const TaskDetailScreen = ({ navigation, route }) => {
     };
 
     const handleUpdateTask = async () => {
-        const updatedTaskData = {
-            title,
-            description,
-            dueDate,
-            status,
-            userId: user.id
-    };
         try {
+            const updatedTaskData = {
+                title,
+                description,
+                dueDate,
+                status,
+                userId: user.id
+            };
             const response = await api.put(`/tasks/${taskId}`, updatedTaskData, {
                 headers: { Authorization: `Bearer ${token}` }
             });
-            console.log('Updated Task Data:', updatedTaskData); // Debugging log
+            console.log('Updated Task Data:', response.data); // Debugging log
             Alert.alert('Task updated successfully!');
             navigation.navigate('TasksHome', { updatedTask: response.data });
         } catch (error) {
@@ -56,9 +56,8 @@ const TaskDetailScreen = ({ navigation, route }) => {
 
     const handleDeleteTask = async () => {
         try {
-            await api.delete(`/tasks/${taskId}`, { 
+            await api.delete(`/tasks/${taskId}`, {
                 headers: { Authorization: `Bearer ${token}` },
-                params: { userId: user.id } 
             });
             Alert.alert('Task deleted successfully!');
             navigation.navigate('TasksHome', { deletedTaskId: taskId });
