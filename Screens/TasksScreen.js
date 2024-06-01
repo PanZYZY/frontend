@@ -38,6 +38,8 @@ const TasksScreen = ({ navigation, route }) => {
     }, [route.params?.deletedTaskId]);
 
     const fetchTasks = async () => {
+        if (!user) return; // Ensure user is not null
+
         try {
             const response = await api.get('/tasks', {
                 headers: { Authorization: `Bearer ${token}` },
@@ -49,7 +51,7 @@ const TasksScreen = ({ navigation, route }) => {
             Alert.alert('Error', 'Could not fetch tasks');
         }
     };
-
+    // Go to task detail when press on a task
     const handlePressTask = useCallback((taskId) => {
         navigation.navigate('TaskDetail', { taskId });
     }, [navigation]);

@@ -49,7 +49,7 @@ function BottomTabNavigator() {
                     }
                     return <Ionicons name={iconName} size={size} color={color} />;
                 },
-                tabBarActiveTintColor: 'tomato',
+                tabBarActiveTintColor: 'orange',
                 tabBarInactiveTintColor: 'gray',
                 tabBarLabelStyle: {
                     fontSize: 12,

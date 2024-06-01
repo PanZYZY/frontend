@@ -14,6 +14,8 @@ const CalendarScreen = ({ navigation, route }) => {
     const isFocused = useIsFocused();
 
     const fetchTasks = useCallback(async () => {
+        if (!user) return; // Ensure user is not null
+
         try {
             const response = await api.get('/tasks', { params: { userId: user.id } });
             const tasks = response.data;
@@ -33,7 +35,7 @@ const CalendarScreen = ({ navigation, route }) => {
         } catch (error) {
             console.error('Error fetching tasks:', error);
         }
-    }, [user.id]);
+    }, [user]);
 
     useEffect(() => {
         if (isFocused) {
@@ -41,15 +43,20 @@ const CalendarScreen = ({ navigation, route }) => {
         }
     }, [isFocused, fetchTasks]);
 
-    const handleDayPress = (day) => {
-        navigation.navigate('TaskList', { selectedDate: day.dateString });
-    };
+    if (!user) {
+        return (
+            <View style={styles.container}>
+                <Text style={[styles.text, { fontSize }]}>Please log in to view your calendar.</Text>
+            </View>
+        );
+    }
 
     return (
         <View style={styles.container}>
             <Text style={[styles.header, { fontSize }]}>Calendar</Text>
             <Calendar
                 markedDates={markedDates}
+                markingType={'multi-dot'}
                 onDayPress={handleDayPress}
                 style={[styles.calendar, { width: screenWidth - 20 }]}
             />
@@ -69,6 +76,9 @@ const styles = StyleSheet.create({
         marginVertical: 10,
         fontWeight: 'bold',
     },
+    text: {
+        color: 'gray',
+    },
     calendar: {
         borderWidth: 1,
         borderColor: '#ddd',
@@ -77,6 +87,7 @@ const styles = StyleSheet.create({
 });
 
 export default CalendarScreen;
+
 
 
 
