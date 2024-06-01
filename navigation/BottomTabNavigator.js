@@ -49,19 +49,17 @@ function BottomTabNavigator() {
                     }
                     return <Ionicons name={iconName} size={size} color={color} />;
                 },
-            })}
-            tabBarOptions={{
-                activeTintColor: 'tomato',
-                inactiveTintColor: 'gray',
-                style: {
+                tabBarActiveTintColor: 'tomato',
+                tabBarInactiveTintColor: 'gray',
+                tabBarLabelStyle: {
+                    fontSize: 12,
+                },
+                tabBarStyle: {
                     backgroundColor: 'white',
                     borderTopWidth: 0,
                     elevation: 5,
                 },
-                labelStyle: {
-                    fontSize: 12,
-                },
-            }}
+            })}
         >
             <Tab.Screen name="Tasks" component={TasksStack} />
             <Tab.Screen name="Calendar" component={CalendarStack} />
@@ -72,6 +70,7 @@ function BottomTabNavigator() {
 }
 
 export default BottomTabNavigator;
+
 
 
 
