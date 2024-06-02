@@ -30,6 +30,11 @@ const AddTaskScreen = ({ navigation, route }) => {
             Alert.alert('Error', 'User not authenticated');
             return;
         }
+        else if ( title || dueDate == null) {
+            Alert.alert('Error', 'Title and due date cannot be null');
+            return;
+        }
+
         //Format the due date
         const formattedDueDate = formatDate(dueDate);
 
@@ -49,25 +54,25 @@ const AddTaskScreen = ({ navigation, route }) => {
     return (
         <View style={[styles.container, { backgroundColor: themeValues.background }]}>
             <TextInput
-                style={[styles.input, { fontSize }]}
+                style={[styles.input, { fontSize, fontSize, color: themeValues.text }]}
                 placeholder="Title"
                 value={title}
                 onChangeText={setTitle}
             />
             <TextInput
-                style={[styles.input, { fontSize }]}
+                style={[styles.input, { fontSize , fontSize, color: themeValues.text}]}
                 placeholder="Description"
                 value={description}
                 onChangeText={setDescription}
             />
             <TextInput
-                style={[styles.input, { fontSize }]}
+                style={[styles.input, { fontSize, fontSize, color: themeValues.text }]}
                 placeholder="Due Date (YYYY-MM-DD)"
                 value={dueDate}
                 onChangeText={setDueDate}
             />
             <TextInput
-                style={[styles.input, { fontSize }]}
+                style={[styles.input, { fontSize, fontSize, color: themeValues.text }]}
                 placeholder="Status"
                 value={status}
                 onChangeText={setStatus}

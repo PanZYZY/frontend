@@ -3,8 +3,24 @@
   "WorkspaceRootPath": "C:\\Users\\yammi\\TaskManager\\frontend\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\yammi\\TaskManager\\frontend\\screens\\AddTaskScreen.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:screens\\AddTaskScreen.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\yammi\\TaskManager\\frontend\\screens\\SettingsScreen.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:screens\\SettingsScreen.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\yammi\\TaskManager\\frontend\\Screens\\SettingScreen.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
       "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:Screens\\SettingScreen.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\yammi\\TaskManager\\frontend\\README.md||{EFC0BB08-EA7D-40C6-A696-C870411A895B}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:README.md||{EFC0BB08-EA7D-40C6-A696-C870411A895B}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\yammi\\TaskManager\\frontend\\.gitignore||{3B902123-F8A7-4915-9F01-361F908088D0}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:.gitignore||{3B902123-F8A7-4915-9F01-361F908088D0}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\yammi\\TaskManager\\frontend\\Screens\\AboutScreen.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
@@ -37,90 +53,139 @@
       "VerticalTabListWidth": 256,
       "DocumentGroups": [
         {
-          "DockedWidth": 57,
-          "SelectedChildIndex": 0,
+          "DockedWidth": 299,
+          "SelectedChildIndex": 3,
           "Children": [
             {
-              "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "SettingScreen.js",
-              "DocumentMoniker": "C:\\Users\\yammi\\TaskManager\\frontend\\Screens\\SettingScreen.js",
-              "RelativeDocumentMoniker": "Screens\\SettingScreen.js",
-              "ToolTip": "C:\\Users\\yammi\\TaskManager\\frontend\\Screens\\SettingScreen.js",
-              "RelativeToolTip": "Screens\\SettingScreen.js",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001646|",
-              "WhenOpened": "2024-05-28T10:42:54.892Z",
-              "EditorCaption": ""
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{3ae79031-e1bc-11d0-8f78-00a0c9110057}"
             },
             {
               "$type": "Document",
               "DocumentIndex": 1,
-              "Title": "AboutScreen.js",
-              "DocumentMoniker": "C:\\Users\\yammi\\TaskManager\\frontend\\Screens\\AboutScreen.js",
-              "RelativeDocumentMoniker": "Screens\\AboutScreen.js",
-              "ToolTip": "C:\\Users\\yammi\\TaskManager\\frontend\\Screens\\AboutScreen.js",
-              "RelativeToolTip": "Screens\\AboutScreen.js",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+              "Title": "SettingsScreen.js",
+              "DocumentMoniker": "C:\\Users\\yammi\\TaskManager\\frontend\\screens\\SettingsScreen.js",
+              "RelativeDocumentMoniker": "screens\\SettingsScreen.js",
+              "ToolTip": "C:\\Users\\yammi\\TaskManager\\frontend\\screens\\SettingsScreen.js",
+              "RelativeToolTip": "screens\\SettingsScreen.js",
+              "ViewState": "AQIAAAYAAAAAAAAAAAAAAB8AAABRAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001646|",
-              "WhenOpened": "2024-05-28T10:42:39.465Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "CalendarScreen.js",
-              "DocumentMoniker": "C:\\Users\\yammi\\TaskManager\\frontend\\Screens\\CalendarScreen.js",
-              "RelativeDocumentMoniker": "Screens\\CalendarScreen.js",
-              "ToolTip": "C:\\Users\\yammi\\TaskManager\\frontend\\Screens\\CalendarScreen.js",
-              "RelativeToolTip": "Screens\\CalendarScreen.js",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001646|",
-              "WhenOpened": "2024-05-28T10:42:27.543Z",
+              "WhenOpened": "2024-06-02T11:41:36.654Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 3,
-              "Title": "TasksScreen.js",
-              "DocumentMoniker": "C:\\Users\\yammi\\TaskManager\\frontend\\Screens\\TasksScreen.js",
-              "RelativeDocumentMoniker": "Screens\\TasksScreen.js",
-              "ToolTip": "C:\\Users\\yammi\\TaskManager\\frontend\\Screens\\TasksScreen.js",
-              "RelativeToolTip": "Screens\\TasksScreen.js",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001646|",
-              "WhenOpened": "2024-05-28T10:42:04.327Z",
+              "Title": "README.md",
+              "DocumentMoniker": "C:\\Users\\yammi\\TaskManager\\frontend\\README.md",
+              "RelativeDocumentMoniker": "README.md",
+              "ToolTip": "C:\\Users\\yammi\\TaskManager\\frontend\\README.md",
+              "RelativeToolTip": "README.md",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAkAAAAkAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001818|",
+              "WhenOpened": "2024-06-02T11:32:10.717Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
-              "Title": "LoginScreen.js",
-              "DocumentMoniker": "C:\\Users\\yammi\\TaskManager\\frontend\\Screens\\LoginScreen.js",
-              "RelativeDocumentMoniker": "Screens\\LoginScreen.js",
-              "ToolTip": "C:\\Users\\yammi\\TaskManager\\frontend\\Screens\\LoginScreen.js",
-              "RelativeToolTip": "Screens\\LoginScreen.js",
-              "ViewState": "AQIAAAkAAAAAAAAAAAAAAAAAAAAAAAAA",
+              "DocumentIndex": 0,
+              "Title": "AddTaskScreen.js",
+              "DocumentMoniker": "C:\\Users\\yammi\\TaskManager\\frontend\\screens\\AddTaskScreen.js",
+              "RelativeDocumentMoniker": "screens\\AddTaskScreen.js",
+              "ToolTip": "C:\\Users\\yammi\\TaskManager\\frontend\\screens\\AddTaskScreen.js",
+              "RelativeToolTip": "screens\\AddTaskScreen.js",
+              "ViewState": "AQIAAB4AAAAAAAAAAAAAAEoAAABTAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001646|",
-              "WhenOpened": "2024-05-28T10:40:53.723Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 6,
-              "Title": "SplashScreen.js",
-              "DocumentMoniker": "C:\\Users\\yammi\\TaskManager\\frontend\\Screens\\SplashScreen.js",
-              "RelativeDocumentMoniker": "Screens\\SplashScreen.js",
-              "ToolTip": "C:\\Users\\yammi\\TaskManager\\frontend\\Screens\\SplashScreen.js",
-              "RelativeToolTip": "Screens\\SplashScreen.js",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001646|",
-              "WhenOpened": "2024-05-28T10:33:38.565Z",
+              "WhenOpened": "2024-06-02T11:11:05.992Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 4,
+              "Title": ".gitignore",
+              "DocumentMoniker": "C:\\Users\\yammi\\TaskManager\\frontend\\.gitignore",
+              "RelativeDocumentMoniker": ".gitignore",
+              "ToolTip": "C:\\Users\\yammi\\TaskManager\\frontend\\.gitignore",
+              "RelativeToolTip": ".gitignore",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAC8AAAAMAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001001|",
+              "WhenOpened": "2024-06-02T10:34:56.479Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "SettingScreen.js",
+              "DocumentMoniker": "C:\\Users\\yammi\\TaskManager\\frontend\\screens\\SettingScreen.js",
+              "RelativeDocumentMoniker": "screens\\SettingScreen.js",
+              "ToolTip": "C:\\Users\\yammi\\TaskManager\\frontend\\screens\\SettingScreen.js",
+              "RelativeToolTip": "screens\\SettingScreen.js",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001646|",
+              "WhenOpened": "2024-05-28T10:42:54.892Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "AboutScreen.js",
+              "DocumentMoniker": "C:\\Users\\yammi\\TaskManager\\frontend\\screens\\AboutScreen.js",
+              "RelativeDocumentMoniker": "screens\\AboutScreen.js",
+              "ToolTip": "C:\\Users\\yammi\\TaskManager\\frontend\\screens\\AboutScreen.js",
+              "RelativeToolTip": "screens\\AboutScreen.js",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001646|",
+              "WhenOpened": "2024-05-28T10:42:39.465Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "CalendarScreen.js",
+              "DocumentMoniker": "C:\\Users\\yammi\\TaskManager\\frontend\\screens\\CalendarScreen.js",
+              "RelativeDocumentMoniker": "screens\\CalendarScreen.js",
+              "ToolTip": "C:\\Users\\yammi\\TaskManager\\frontend\\screens\\CalendarScreen.js",
+              "RelativeToolTip": "screens\\CalendarScreen.js",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001646|",
+              "WhenOpened": "2024-05-28T10:42:27.543Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "TasksScreen.js",
+              "DocumentMoniker": "C:\\Users\\yammi\\TaskManager\\frontend\\screens\\TasksScreen.js",
+              "RelativeDocumentMoniker": "screens\\TasksScreen.js",
+              "ToolTip": "C:\\Users\\yammi\\TaskManager\\frontend\\screens\\TasksScreen.js",
+              "RelativeToolTip": "screens\\TasksScreen.js",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001646|",
+              "WhenOpened": "2024-05-28T10:42:04.327Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 9,
+              "Title": "LoginScreen.js",
+              "DocumentMoniker": "C:\\Users\\yammi\\TaskManager\\frontend\\screens\\LoginScreen.js",
+              "RelativeDocumentMoniker": "screens\\LoginScreen.js",
+              "ToolTip": "C:\\Users\\yammi\\TaskManager\\frontend\\screens\\LoginScreen.js",
+              "RelativeToolTip": "screens\\LoginScreen.js",
+              "ViewState": "AQIAAAkAAAAAAAAAAAAAAAAAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001646|",
+              "WhenOpened": "2024-05-28T10:40:53.723Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 10,
+              "Title": "SplashScreen.js",
+              "DocumentMoniker": "C:\\Users\\yammi\\TaskManager\\frontend\\screens\\SplashScreen.js",
+              "RelativeDocumentMoniker": "screens\\SplashScreen.js",
+              "ToolTip": "C:\\Users\\yammi\\TaskManager\\frontend\\screens\\SplashScreen.js",
+              "RelativeToolTip": "screens\\SplashScreen.js",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001646|",
+              "WhenOpened": "2024-05-28T10:33:38.565Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
               "Title": "App.js",
               "DocumentMoniker": "C:\\Users\\yammi\\TaskManager\\frontend\\App.js",
               "RelativeDocumentMoniker": "App.js",
@@ -128,8 +193,17 @@
               "RelativeToolTip": "App.js",
               "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001646|",
-              "WhenOpened": "2024-05-28T10:31:11.557Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-05-28T10:31:11.557Z"
+            }
+          ]
+        },
+        {
+          "DockedWidth": 101,
+          "SelectedChildIndex": -1,
+          "Children": [
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{1c64b9c2-e352-428e-a56d-0ace190b99a6}"
             }
           ]
         }
