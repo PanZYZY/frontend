@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useCallback } from 'react';
 import { View, StyleSheet, Text, Dimensions } from 'react-native';
-import { Calendar } from 'react-native-calendars';
+import { CalendarList } from 'react-native-calendars';
 import { useIsFocused } from '@react-navigation/native';
 import api from '../utils/api';
 import { useAuth } from '../context/AuthContext';
@@ -11,7 +11,7 @@ const CalendarScreen = ({ navigation }) => {
     const [markedDates, setMarkedDates] = useState({});
     const { user, token } = useAuth();
     const { fontSize } = useFontSize();
-    const { themeValues } = useTheme();
+    const { theme, themeValues } = useTheme();
     const screenWidth = Dimensions.get('window').width;
     const isFocused = useIsFocused();
 
@@ -25,7 +25,8 @@ const CalendarScreen = ({ navigation }) => {
                 params: { userId: user.id },
             });
             const tasks = response.data;
-            console.log('Fetched tasks:', tasks);
+            //Debug log
+            //console.log('Fetched tasks:', tasks);
 
             // Method for changing marked dates
             const newMarkedDates = {};
@@ -38,6 +39,7 @@ const CalendarScreen = ({ navigation }) => {
             });
             //Debug log
             //console.log('Updated marked dates:', newMarkedDates);
+
             // After date list changes, set marks
             setMarkedDates(newMarkedDates);
         } catch (error) {
@@ -69,18 +71,19 @@ const CalendarScreen = ({ navigation }) => {
     return (
         <View style={[styles.container, { backgroundColor: themeValues.background }]}>
             <Text style={[styles.header, { fontSize, color: themeValues.text }]}>Calendar</Text>
-            <Calendar
+            <CalendarList
+
                 markedDates={markedDates}
                 markingType={'multi-dot'}
                 onDayPress={handleDayPress}
                 style={[styles.calendar, { width: screenWidth - 20 }]}
                 theme={{
-                    calendarBackground: themeValues.background,
-                    textSectionTitleColor: themeValues.text,
-                    dayTextColor: themeValues.text,
-                    todayTextColor: themeValues.primary,
-                    selectedDayBackgroundColor: themeValues.primary,
-                    monthTextColor: themeValues.text,
+                    BackgroundColor: theme.background,
+                    textSectionTitleColor: theme.text,
+                    dayTextColor: theme.text,
+                    todayTextColor: theme.text,
+                    selectedDayBackgroundColor: theme.text,
+                    monthTextColor: theme.text,
                 }}
             />
         </View>

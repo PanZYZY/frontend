@@ -2,6 +2,9 @@ import React, { useState, useEffect } from 'react';
 import { View, TextInput, Button, StyleSheet, Alert } from 'react-native';
 import api from '../utils/api';
 import { useAuth } from '../context/AuthContext';
+import { useFontSize } from '../context/FontSizeContext';
+import { useTheme } from '../context/ThemeContext';
+import CustomButton from '../components/CustomButton';
 
 const TaskDetailScreen = ({ navigation, route }) => {
     const { taskId } = route.params;
@@ -11,6 +14,9 @@ const TaskDetailScreen = ({ navigation, route }) => {
     const [description, setDescription] = useState('');
     const [dueDate, setDueDate] = useState('');
     const [status, setStatus] = useState('');
+    const { fontSize } = useFontSize();
+    const { themeValues } = useTheme();
+
 
     useEffect(() => {
         fetchTask();
@@ -72,33 +78,33 @@ const TaskDetailScreen = ({ navigation, route }) => {
     if (!task) return null;
 
     return (
-        <View style={styles.container}>
+        <View style={[styles.container, , { backgroundColor: themeValues.background }]}>
             <TextInput
-                style={styles.input}
+                style={[styles.input, { fontSize, color: themeValues.text }]}
                 placeholder="Title"
                 value={title}
                 onChangeText={setTitle}
             />
             <TextInput
-                style={styles.input}
+                style={[styles.input, { fontSize, color: themeValues.text }]}
                 placeholder="Description"
                 value={description}
                 onChangeText={setDescription}
             />
             <TextInput
-                style={styles.input}
+                style={[styles.input, { fontSize, color: themeValues.text }]}
                 placeholder="Due Date (YYYY-MM-DD)"
                 value={dueDate}
                 onChangeText={setDueDate}
             />
             <TextInput
-                style={styles.input}
+                style={[styles.input, { fontSize, color: themeValues.text }]}
                 placeholder="Status"
                 value={status}
                 onChangeText={setStatus}
             />
-            <Button title="Update Task" onPress={handleUpdateTask} />
-            <Button title="Delete Task" onPress={handleDeleteTask} />
+            <CustomButton title="Update Task" onPress={handleUpdateTask} />
+            <CustomButton title="Delete Task" onPress={handleDeleteTask} />
         </View>
     );
 };
@@ -111,7 +117,6 @@ const styles = StyleSheet.create({
     },
     input: {
         height: 40,
-        borderColor: 'gray',
         borderWidth: 1,
         marginBottom: 12,
         paddingHorizontal: 8,

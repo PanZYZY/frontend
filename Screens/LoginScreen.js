@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { View, TextInput, Button, StyleSheet, Alert, Text } from 'react-native';
 import api from '../utils/api';
 import { useAuth } from '../context/AuthContext';
+import CustomButton from '../components/CustomButton';
 
 const LoginScreen = ({ navigation }) => {
     const [username, setUsername] = useState('');
@@ -37,10 +38,10 @@ const LoginScreen = ({ navigation }) => {
                 secureTextEntry
             />
             <View style={styles.buttonContainer}>
-                <Button title="Login" onPress={handleLogin} color="#ff6347" />
+                <CustomButton title="Login" onPress={handleLogin} color="#ff6347" />
             </View>
             <View style={styles.buttonContainer}>
-                <Button title="Sign Up" onPress={() => navigation.navigate('SignUp')} color="#4682b4" />
+                <CustomButton title="Sign Up" onPress={() => navigation.navigate('SignUp')} color="#4682b4" />
             </View>
         </View>
     );
