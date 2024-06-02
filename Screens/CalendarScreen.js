@@ -52,7 +52,9 @@ const CalendarScreen = ({ navigation, route }) => {
 
     if (!user) {
         return (
-            navigation.navigate('Login')
+            <View style={styles.container}>
+                <Text style={[styles.text, { fontSize }]}>Please log in to view your calendar.</Text>
+            </View>
         );
     }
 
