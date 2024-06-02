@@ -15,6 +15,7 @@ const CalendarScreen = ({ navigation }) => {
     const screenWidth = Dimensions.get('window').width;
     const isFocused = useIsFocused();
 
+    // Core funtion, getting task due date to use on calendar
     const fetchTasks = useCallback(async () => {
         if (!user) return; // Ensure user is not null
 
@@ -26,6 +27,7 @@ const CalendarScreen = ({ navigation }) => {
             const tasks = response.data;
             console.log('Fetched tasks:', tasks);
 
+            // Method for changing marked dates
             const newMarkedDates = {};
             tasks.forEach(task => {
                 const date = task.dueDate;
@@ -34,24 +36,28 @@ const CalendarScreen = ({ navigation }) => {
                     dots: [{ key: task.id, color: 'blue' }],
                 };
             });
-
-            console.log('Updated marked dates:', newMarkedDates);
+            //Debug log
+            //console.log('Updated marked dates:', newMarkedDates);
+            // After date list changes, set marks
             setMarkedDates(newMarkedDates);
         } catch (error) {
             console.error('Error fetching tasks:', error);
         }
     }, [user, token]);
 
+    //Update the marking list whenever this screen is checked on
     useEffect(() => {
         if (isFocused) {
             fetchTasks();
         }
     }, [isFocused, fetchTasks]);
 
+    // Navigate to taskList screen when pressing on a date
     const handleDayPress = useCallback((day) => {
         navigation.navigate('TaskList', { selectedDate: day.dateString });
     }, [navigation]);
 
+    // Help resolve when user logs out.
     if (!user) {
         return (
             <View style={[styles.container, { backgroundColor: themeValues.background }]}>
