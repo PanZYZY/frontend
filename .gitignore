@@ -36,3 +36,6 @@ node_modules/
 
 # Environment variables
 .env
+
+# windows debug
+%ProgramData%
