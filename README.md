@@ -33,7 +33,7 @@ This is the frontend for the Task Manager application. It provides a user interf
 1.  Clone the repository:
     ```bash
     git clone https://github.com/PanZYZY/frontend.git
-    cd frontend
+    cd task_manager_frontend
     ```
 2.  Install dependencies:
 
