@@ -5,10 +5,10 @@ import { useTheme } from '../context/ThemeContext';
 
 const AboutScreen = () => {
     const { fontSize } = useFontSize();
-    const { theme } = useTheme();
+    const { themeValues } = useTheme();
 
     return (
-        <ScrollView contentContainerStyle={[styles.container, { backgroundColor: theme.background }]}>
+        <ScrollView contentContainerStyle={[styles.container, { backgroundColor: themeValues.background }]}>
             <Text style={[styles.heading, { fontSize: fontSize + 4 }]}>About This App</Text>
             <Text style={[styles.text, { fontSize }]}>
                 This app helps you to manage your tasks and schedule efficiently.
@@ -16,18 +16,18 @@ const AboutScreen = () => {
             </Text>
             <Text style={[styles.heading, { fontSize: fontSize + 4 }]}>Open Source Licenses</Text>
 
-            <Text style={[styles.subheading, { fontSize: fontSize + 2 }]}>Front End</Text>
-            <Text style={[styles.license, { fontSize }]}>- React Native</Text>
-            <Text style={[styles.license, { fontSize }]}>- Expo</Text>
-            <Text style={[styles.license, { fontSize }]}>- Axios</Text>
-            <Text style={[styles.license, { fontSize }]}>- React Navigation</Text>
-            <Text style={[styles.license, { fontSize }]}>- AsyncStorage</Text>
+            <Text style={[styles.subheading, { fontSize: fontSize + 2, color: themeValues.text }]}>Front End</Text>
+            <Text style={[styles.license, { fontSize, color: themeValues.text }]}>- React Native</Text>
+            <Text style={[styles.license, { fontSize, color: themeValues.text }]}>- Expo</Text>
+            <Text style={[styles.license, { fontSize, color: themeValues.text }]}>- Axios</Text>
+            <Text style={[styles.license, { fontSize, color: themeValues.text }]}>- React Navigation</Text>
+            <Text style={[styles.license, { fontSize, color: themeValues.text }]}>- AsyncStorage</Text>
 
-            <Text style={[styles.subheading, { fontSize: fontSize + 2 }]}>Back End</Text>
-            <Text style={[styles.license, { fontSize }]}>- Node.js</Text>
-            <Text style={[styles.license, { fontSize }]}>- Express</Text>
-            <Text style={[styles.license, { fontSize }]}>- Sequelize</Text>
-            <Text style={[styles.license, { fontSize }]}>- MySQL</Text>
+            <Text style={[styles.subheading, { fontSize: fontSize + 2, color: themeValues.text }]}>Back End</Text>
+            <Text style={[styles.license, { fontSize, color: themeValues.text }]}>- Node.js</Text>
+            <Text style={[styles.license, { fontSize, color: themeValues.text }]}>- Express</Text>
+            <Text style={[styles.license, { fontSize, color: themeValues.text }]}>- Sequelize</Text>
+            <Text style={[styles.license, { fontSize, color: themeValues.text }]}>- MySQL</Text>
         </ScrollView>
     );
 };

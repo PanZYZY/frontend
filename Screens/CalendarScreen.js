@@ -11,7 +11,7 @@ const CalendarScreen = ({ navigation }) => {
     const [markedDates, setMarkedDates] = useState({});
     const { user, token } = useAuth();
     const { fontSize } = useFontSize();
-    const { theme } = useTheme();
+    const { themeValues } = useTheme();
     const screenWidth = Dimensions.get('window').width;
     const isFocused = useIsFocused();
 
@@ -54,27 +54,27 @@ const CalendarScreen = ({ navigation }) => {
 
     if (!user) {
         return (
-            <View style={[styles.container, { backgroundColor: theme.background }]}>
-                <Text style={[styles.text, { fontSize, color: theme.text }]}>Please log in to view your calendar.</Text>
+            <View style={[styles.container, { backgroundColor: themeValues.background }]}>
+                <Text style={[styles.text, { fontSize, color: themeValues.text }]}>Please log in to view your calendar.</Text>
             </View>
         );
     }
 
     return (
-        <View style={[styles.container, { backgroundColor: theme.background }]}>
-            <Text style={[styles.header, { fontSize, color: theme.text }]}>Calendar</Text>
+        <View style={[styles.container, { backgroundColor: themeValues.background }]}>
+            <Text style={[styles.header, { fontSize, color: themeValues.text }]}>Calendar</Text>
             <Calendar
                 markedDates={markedDates}
                 markingType={'multi-dot'}
                 onDayPress={handleDayPress}
                 style={[styles.calendar, { width: screenWidth - 20 }]}
                 theme={{
-                    calendarBackground: theme.background,
-                    textSectionTitleColor: theme.text,
-                    dayTextColor: theme.text,
-                    todayTextColor: theme.primary,
-                    selectedDayBackgroundColor: theme.primary,
-                    monthTextColor: theme.text,
+                    calendarBackground: themeValues.background,
+                    textSectionTitleColor: themeValues.text,
+                    dayTextColor: themeValues.text,
+                    todayTextColor: themeValues.primary,
+                    selectedDayBackgroundColor: themeValues.primary,
+                    monthTextColor: themeValues.text,
                 }}
             />
         </View>
@@ -103,4 +103,5 @@ const styles = StyleSheet.create({
 });
 
 export default CalendarScreen;
+
 

@@ -8,16 +8,16 @@ import { ThemeProvider, useTheme } from './context/ThemeContext';
 import { lightTheme, darkTheme } from './utils/themes';
 
 const MainApp = () => {
-    const { theme } = useTheme();
+    const { themeValues } = useTheme();
 
     const navTheme = {
-        dark: theme === 'dark',
+        dark: themeValues.background === darkTheme.background,
         colors: {
-            background: theme === 'dark' ? darkTheme.background : lightTheme.background,
-            card: theme === 'dark' ? darkTheme.card : lightTheme.card,
-            text: theme === 'dark' ? darkTheme.text : lightTheme.text,
-            border: theme === 'dark' ? darkTheme.border : lightTheme.border,
-            primary: theme === 'dark' ? darkTheme.primary : lightTheme.primary,
+            background: themeValues.background,
+            card: themeValues.card,
+            text: themeValues.text,
+            border: themeValues.border,
+            primary: themeValues.primary,
         },
     };
 
@@ -27,7 +27,6 @@ const MainApp = () => {
         </NavigationContainer>
     );
 };
-
 
 const App = () => {
     return (
@@ -42,4 +41,5 @@ const App = () => {
 };
 
 export default App;
+
 

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, Button, StyleSheet, Switch } from 'react-native';
+import { View, Text, StyleSheet, Switch } from 'react-native';
 import { useAuth } from '../context/AuthContext';
 import { useFontSize } from '../context/FontSizeContext';
 import { useTheme } from '../context/ThemeContext';
@@ -9,7 +9,7 @@ const SettingsScreen = ({ navigation }) => {
     const { fontSize, updateFontSize } = useFontSize();
     const { logout } = useAuth();
     const [isLargeFont, setIsLargeFont] = useState(fontSize > 16);
-    const { theme, toggleTheme } = useTheme();
+    const { toggleTheme, themeValues, theme } = useTheme();
 
     useEffect(() => {
         setIsLargeFont(fontSize > 16);
@@ -27,20 +27,20 @@ const SettingsScreen = ({ navigation }) => {
     };
 
     return (
-        <View style={[styles.container, { backgroundColor: theme.background }]}>
+        <View style={[styles.container, { backgroundColor: themeValues.background }]}>
             <View style={styles.settingRow}>
-                <Text style={[styles.label, { fontSize, color: theme.text }]}>Enable Large Font</Text>
+                <Text style={[styles.label, { fontSize, color: themeValues.text }]}>Enable Large Font</Text>
                 <Switch
                     value={isLargeFont}
                     onValueChange={handleFontSizeToggle}
                 />
             </View>
             <View style={styles.settingRow}>
-                <Text style={[styles.label, { fontSize, color: theme.text }]}>Dark Mode</Text>
+                <Text style={[styles.label, { fontSize, color: themeValues.text }]}>Dark Mode</Text>
                 <Switch value={theme === 'dark'} onValueChange={toggleTheme} />
             </View>
             <View style={styles.logoutButton}>
-                <CustomButton title="Logout" onPress={handleLogout} color={theme.primary} />
+                <CustomButton title="Logout" onPress={handleLogout} color={themeValues.primary} />
             </View>
         </View>
     );
@@ -64,7 +64,6 @@ const styles = StyleSheet.create({
         marginTop: 20,
         alignSelf: 'center',
         width: '100%',
-        color: 'orange',
     },
 });
 

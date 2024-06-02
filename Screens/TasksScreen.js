@@ -12,7 +12,7 @@ const TasksScreen = ({ navigation, route }) => {
     const { fontSize } = useFontSize();
     const [tasks, setTasks] = useState([]);
     const { user, token } = useAuth();
-    const { theme } = useTheme();
+    const { themeValues } = useTheme();
 
     useEffect(() => {
         fetchTasks();
@@ -62,7 +62,7 @@ const TasksScreen = ({ navigation, route }) => {
     ), [handlePressTask]);
 
     return (
-        <View style={[styles.container, { backgroundColor: theme.background }]}>
+        <View style={[styles.container, { backgroundColor: themeValues.background }]}>
             <FlatList
                 data={tasks}
                 renderItem={renderTask}

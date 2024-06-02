@@ -12,7 +12,7 @@ const AddTaskScreen = ({ navigation, route }) => {
     const [dueDate, setDueDate] = useState('');
     const [status, setStatus] = useState('');
     const { user, token } = useAuth();
-    const { theme } = useTheme();
+    const { themeValues } = useTheme();
     const { fontSize } = useFontSize();
 
 
@@ -47,7 +47,7 @@ const AddTaskScreen = ({ navigation, route }) => {
     };
 
     return (
-        <View style={[styles.container, { backgroundColor: theme.background }]}>
+        <View style={[styles.container, { backgroundColor: themeValues.background }]}>
             <TextInput
                 style={[styles.input, { fontSize }]}
                 placeholder="Title"

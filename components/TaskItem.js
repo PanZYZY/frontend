@@ -5,10 +5,10 @@ import { useTheme } from '../context/ThemeContext';
 
 const TaskItem = ({ task, onPress }) => {
     const { fontSize } = useFontSize();
-    const { theme } = useTheme();
+    const { themeValues } = useTheme();
 
     return (
-        <TouchableOpacity style={[styles.container, { backgroundColor: theme.background }]} onPress={() => onPress(task.id)}>
+        <TouchableOpacity style={[styles.container, { backgroundColor: themeValues.background }]} onPress={() => onPress(task.id)}>
             <Text style={[styles.title, { fontSize }]}>{task.title}</Text>
             <Text style={[styles.description, { fontSize }]}>description: {task.description}</Text>
             <Text style={[styles.dueDate, { fontSize }]}>due date: {task.dueDate}</Text>
