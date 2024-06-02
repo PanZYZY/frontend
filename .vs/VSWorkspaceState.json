@@ -1,12 +1,16 @@
 {
   "ExpandedNodes": [
     "",
-    "\\assets",
+    "\\%ProgramData%",
+    "\\%ProgramData%\\Microsoft",
+    "\\%ProgramData%\\Microsoft\\Windows",
+    "\\%ProgramData%\\Microsoft\\Windows\\UUS",
+    "\\%ProgramData%\\Microsoft\\Windows\\UUS\\State",
     "\\components",
     "\\navigation",
     "\\screens",
     "\\utils"
   ],
-  "SelectedNode": "\\screens\\SettingsScreen.js",
+  "SelectedNode": "\\%ProgramData%",
   "PreviewInSolutionExplorer": false
 }
