@@ -1,5 +1,5 @@
 {
-  "name": "frontend",
+  "name": "task_manager_frontend",
   "version": "1.0.0",
   "main": "expo/AppEntry.js",
   "scripts": {
