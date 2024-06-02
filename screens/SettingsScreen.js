@@ -1,13 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, Button, StyleSheet, Switch } from 'react-native';
-import { useFontSize } from '../context/FontSizeContext';
 import { useAuth } from '../context/AuthContext';
+import { useFontSize } from '../context/FontSizeContext';
+import { useTheme } from '../context/ThemeContext';
+import CustomButton from '../components/CustomButton';
 
 const SettingsScreen = ({ navigation }) => {
     const { fontSize, updateFontSize } = useFontSize();
     const { logout } = useAuth();
     const [isLargeFont, setIsLargeFont] = useState(fontSize > 16);
-
+    const { theme, toggleTheme } = useTheme();
 
     useEffect(() => {
         setIsLargeFont(fontSize > 16);
@@ -25,15 +27,21 @@ const SettingsScreen = ({ navigation }) => {
     };
 
     return (
-        <View style={styles.container}>
-            <View style={styles.switchContainer}>
-                <Text style={[styles.label, { fontSize }]}>Enable Large Font</Text>
+        <View style={[styles.container, { backgroundColor: theme.background }]}>
+            <View style={styles.settingRow}>
+                <Text style={[styles.label, { fontSize, color: theme.text }]}>Enable Large Font</Text>
                 <Switch
                     value={isLargeFont}
                     onValueChange={handleFontSizeToggle}
                 />
             </View>
-            <Button title="Logout" onPress={handleLogout} />
+            <View style={styles.settingRow}>
+                <Text style={[styles.label, { fontSize, color: theme.text }]}>Dark Mode</Text>
+                <Switch value={theme === 'dark'} onValueChange={toggleTheme} />
+            </View>
+            <View style={styles.logoutButton}>
+                <CustomButton title="Logout" onPress={handleLogout} color={theme.primary} />
+            </View>
         </View>
     );
 };
@@ -41,19 +49,22 @@ const SettingsScreen = ({ navigation }) => {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        justifyContent: 'Top',
-        alignItems: 'center',
         padding: 20,
-        backgroundColor: '#f5f5f5',
     },
-    switchContainer: {
+    settingRow: {
         flexDirection: 'row',
         alignItems: 'center',
-        marginBottom: 50,
+        justifyContent: 'space-between',
+        marginBottom: 20,
     },
     label: {
-        fontSize: 16,
-        marginRight: 10,
+        marginVertical: 10,
+    },
+    LogoutButton: {
+        marginTop: 20,
+        alignSelf: 'center',
+        width: '100%',
+        color: 'orange',
     },
 });
 

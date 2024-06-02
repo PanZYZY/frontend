@@ -6,11 +6,13 @@ import { useAuth } from '../context/AuthContext';
 import CustomButton from '../components/CustomButton';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { useFontSize } from '../context/FontSizeContext';
+import { useTheme } from '../context/ThemeContext';
 
 const TasksScreen = ({ navigation, route }) => {
     const { fontSize } = useFontSize();
     const [tasks, setTasks] = useState([]);
     const { user, token } = useAuth();
+    const { theme } = useTheme();
 
     useEffect(() => {
         fetchTasks();
@@ -60,7 +62,7 @@ const TasksScreen = ({ navigation, route }) => {
     ), [handlePressTask]);
 
     return (
-        <View style={styles.container}>
+        <View style={[styles.container, { backgroundColor: theme.background }]}>
             <FlatList
                 data={tasks}
                 renderItem={renderTask}
@@ -72,7 +74,7 @@ const TasksScreen = ({ navigation, route }) => {
                 icon={<Icon name="add" size={20} color="#fff" />}
                 style={styles.addButton}
             />
-        </View>
+        </View >
     );
 };
 
@@ -81,7 +83,6 @@ const styles = StyleSheet.create({
         flex: 1,
         justifyContent: 'left',
         alignItems: 'left',
-        backgroundColor: '#f5f5f5',
     },
     addButton: {
         position: 'absolute',

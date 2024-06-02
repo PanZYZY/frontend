@@ -9,6 +9,7 @@ const TaskListScreen = ({ route, navigation }) => {
     const [tasks, setTasks] = useState([]);
     const { user, token } = useAuth();
 
+
     useEffect(() => {
         if (user && token) {
             fetchTasksForDate();
@@ -53,7 +54,6 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         padding: 16,
-        backgroundColor: 'white',
     },
     dateHeader: {
         fontSize: 20,

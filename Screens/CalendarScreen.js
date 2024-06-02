@@ -5,11 +5,13 @@ import { useIsFocused } from '@react-navigation/native';
 import api from '../utils/api';
 import { useAuth } from '../context/AuthContext';
 import { useFontSize } from '../context/FontSizeContext';
+import { useTheme } from '../context/ThemeContext';
 
-const CalendarScreen = ({ navigation, route }) => {
+const CalendarScreen = ({ navigation }) => {
     const [markedDates, setMarkedDates] = useState({});
     const { user, token } = useAuth();
     const { fontSize } = useFontSize();
+    const { theme } = useTheme();
     const screenWidth = Dimensions.get('window').width;
     const isFocused = useIsFocused();
 
@@ -52,24 +54,27 @@ const CalendarScreen = ({ navigation, route }) => {
 
     if (!user) {
         return (
-            <View style={styles.container}>
-                <Text style={[styles.text, { fontSize }]}>Please log in to view your calendar.</Text>
+            <View style={[styles.container, { backgroundColor: theme.background }]}>
+                <Text style={[styles.text, { fontSize, color: theme.text }]}>Please log in to view your calendar.</Text>
             </View>
         );
     }
 
     return (
-        <View style={styles.container}>
-            <Text style={[styles.header, { fontSize }]}>Calendar</Text>
+        <View style={[styles.container, { backgroundColor: theme.background }]}>
+            <Text style={[styles.header, { fontSize, color: theme.text }]}>Calendar</Text>
             <Calendar
                 markedDates={markedDates}
                 markingType={'multi-dot'}
                 onDayPress={handleDayPress}
                 style={[styles.calendar, { width: screenWidth - 20 }]}
                 theme={{
-                    textDayFontSize: fontSize,
-                    textMonthFontSize: fontSize + 2,
-                    textDayHeaderFontSize: fontSize - 2,
+                    calendarBackground: theme.background,
+                    textSectionTitleColor: theme.text,
+                    dayTextColor: theme.text,
+                    todayTextColor: theme.primary,
+                    selectedDayBackgroundColor: theme.primary,
+                    monthTextColor: theme.text,
                 }}
             />
         </View>
@@ -81,7 +86,6 @@ const styles = StyleSheet.create({
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
-        backgroundColor: 'white',
         padding: 10,
     },
     header: {
@@ -99,3 +103,4 @@ const styles = StyleSheet.create({
 });
 
 export default CalendarScreen;
+

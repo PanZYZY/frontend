@@ -1,11 +1,14 @@
 import React from 'react';
 import { View, Text, StyleSheet, ScrollView } from 'react-native';
 import { useFontSize } from '../context/FontSizeContext';
+import { useTheme } from '../context/ThemeContext';
 
 const AboutScreen = () => {
     const { fontSize } = useFontSize();
+    const { theme } = useTheme();
+
     return (
-        <ScrollView contentContainerStyle={styles.container}>
+        <ScrollView contentContainerStyle={[styles.container, { backgroundColor: theme.background }]}>
             <Text style={[styles.heading, { fontSize: fontSize + 4 }]}>About This App</Text>
             <Text style={[styles.text, { fontSize }]}>
                 This app helps you to manage your tasks and schedule efficiently.

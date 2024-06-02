@@ -1,12 +1,14 @@
 import React from 'react';
 import { TouchableOpacity, Text, StyleSheet, View } from 'react-native';
 import { useFontSize } from '../context/FontSizeContext';
+import { useTheme } from '../context/ThemeContext';
 
 const TaskItem = ({ task, onPress }) => {
     const { fontSize } = useFontSize();
+    const { theme } = useTheme();
 
     return (
-        <TouchableOpacity style={styles.container} onPress={() => onPress(task.id)}>
+        <TouchableOpacity style={[styles.container, { backgroundColor: theme.background }]} onPress={() => onPress(task.id)}>
             <Text style={[styles.title, { fontSize }]}>{task.title}</Text>
             <Text style={[styles.description, { fontSize }]}>description: {task.description}</Text>
             <Text style={[styles.dueDate, { fontSize }]}>due date: {task.dueDate}</Text>
@@ -19,7 +21,6 @@ const styles = StyleSheet.create({
     container: {
         padding: 16,
         marginVertical: 8,
-        backgroundColor: '#f9f9f9',
         borderRadius: 8,
     },
     title: {
