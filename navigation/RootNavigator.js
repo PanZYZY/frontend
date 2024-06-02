@@ -8,6 +8,7 @@ const Stack = createStackNavigator();
 
 function RootNavigator() {
     return (
+        // Go to login screen at the start of the app
         <Stack.Navigator initialRouteName="Login" screenOptions={{ headerShown: false }}>
             <Stack.Screen name="Login" component={LoginScreen} />
             <Stack.Screen name="SignUp" component={SignUpScreen} />

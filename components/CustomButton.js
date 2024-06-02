@@ -5,6 +5,7 @@ import { useFontSize } from '../context/FontSizeContext';
 const CustomButton = ({ title, onPress, style, icon }) => {
     const { fontSize } = useFontSize();
 
+    // use of customized button to change the style of default button
     return (
         <TouchableOpacity onPress={onPress} style={[styles.button, style]}>
             {icon}

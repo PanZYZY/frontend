@@ -12,8 +12,8 @@ const LoginScreen = ({ navigation }) => {
     const handleLogin = async () => {
         try {
             const response = await api.post('/auth/login', { username, password });
-            const { token, user } = response.data;
-            login(user, token);
+            const { token, user } = response.data; // save token and user data
+            login(user, token); // Store user and token in context
             navigation.navigate('Main');
         } catch (error) {
             console.error('Error logging in:', error);

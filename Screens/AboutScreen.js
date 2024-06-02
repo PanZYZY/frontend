@@ -4,6 +4,7 @@ import { useFontSize } from '../context/FontSizeContext';
 import { useTheme } from '../context/ThemeContext';
 
 const AboutScreen = () => {
+    // Use to change font size and themes depends on change in setting
     const { fontSize } = useFontSize();
     const { themeValues } = useTheme();
 
