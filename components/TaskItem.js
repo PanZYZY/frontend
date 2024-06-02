@@ -9,10 +9,10 @@ const TaskItem = ({ task, onPress }) => {
 
     return (
         <TouchableOpacity style={[styles.container, { backgroundColor: themeValues.background }]} onPress={() => onPress(task.id)}>
-            <Text style={[styles.title, { fontSize }]}>{task.title}</Text>
-            <Text style={[styles.description, { fontSize }]}>description: {task.description}</Text>
-            <Text style={[styles.dueDate, { fontSize }]}>due date: {task.dueDate}</Text>
-            <Text style={[styles.status, { fontSize }]}>status: {task.status}</Text>
+            <Text style={[styles.title, { fontSize, color: themeValues.text }]}>{task.title}</Text>
+            <Text style={[styles.description, { fontSize, color: themeValues.text }]}>description: {task.description}</Text>
+            <Text style={[styles.dueDate, { fontSize, color: themeValues.text }]}>due date: {task.dueDate}</Text>
+            <Text style={[styles.status, { fontSize, color: themeValues.text }]}>status: {task.status}</Text>
         </TouchableOpacity>
     );
 };

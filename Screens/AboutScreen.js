@@ -9,12 +9,12 @@ const AboutScreen = () => {
 
     return (
         <ScrollView contentContainerStyle={[styles.container, { backgroundColor: themeValues.background }]}>
-            <Text style={[styles.heading, { fontSize: fontSize + 4 }]}>About This App</Text>
-            <Text style={[styles.text, { fontSize }]}>
+            <Text style={[styles.heading, { fontSize: fontSize + 4, color: themeValues.text }]}>About This App</Text>
+            <Text style={[styles.text, { fontSize, color: themeValues.text }]}>
                 This app helps you to manage your tasks and schedule efficiently.
                 You can add, update, and delete tasks, as well as view them on a calendar.
             </Text>
-            <Text style={[styles.heading, { fontSize: fontSize + 4 }]}>Open Source Licenses</Text>
+            <Text style={[styles.heading, { fontSize: fontSize + 4, color: themeValues.text }]}>Open Source Licenses</Text>
 
             <Text style={[styles.subheading, { fontSize: fontSize + 2, color: themeValues.text }]}>Front End</Text>
             <Text style={[styles.license, { fontSize, color: themeValues.text }]}>- React Native</Text>
